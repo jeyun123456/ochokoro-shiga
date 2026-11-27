@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アインズ DAY2 準備結果ビューア — 観光 × プロダクトパビリオン</title>
+<style>
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-alt: #f0eee8;
+  --surface-tint: #eef4f7;
+  --ink: #13202e;
+  --ink-muted: #4a5a6a;
+  --ink-subtle: #647483;
+  --indigo: #0f2b46;
+  --indigo-soft: #e6edf4;
+  --teal: #0e7490;
+  --teal-soft: #e6f4f7;
+  --vermilion: #c84b31;
+  --vermilion-soft: #fbeee9;
+  --gold: #a17420;
+  --gold-soft: #fbf5e6;
+  --line: #e2ded5;
+  --line-strong: #cbc4b7;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-sans: "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Noto Serif CJK JP", "Hiragino Mincho ProN", serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; color-scheme: light; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--indigo); color: #ffffff; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-subtle); }
+
+a { color: var(--teal); text-underline-offset: 3px; }
+a:hover { color: var(--indigo); }
+.num { font-variant-numeric: tabular-nums; }
+.jp { font-family: var(--font-sans); }
+
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+/* Sticky Top Navigation */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(247, 246, 242, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  color: var(--indigo);
+  text-decoration: none;
+  font-size: 14.5px;
+  white-space: nowrap;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--ink-muted);
+  font-size: 11.8px;
+  font-weight: 600;
+  padding: 5px 6px;
+  border-radius: 99px;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+.nav-links a:hover, .nav-links a.active {
+  background: var(--indigo-soft);
+  color: var(--indigo);
+}
+.top-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--indigo);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+.btn:hover { background: var(--indigo-soft); border-color: var(--indigo); }
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: var(--indigo);
+  color: #ffffff;
+  border-color: var(--indigo);
+}
+.btn-primary:hover { background: #193f63; color: #ffffff; border-color: #193f63; }
+.btn-sm { padding: 6px 10px; font-size: 12px; }
+
+/* Sections & Typography */
+section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+section:last-of-type { border-bottom: none; }
+.sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.sec-head h2 {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--indigo);
+  line-height: 1.3;
+}
+.sec-desc {
+  color: var(--ink-muted);
+  font-size: 14.5px;
+  max-width: 74ch;
+  margin-top: 6px;
+}
+
+/* Hero */
+.hero {
+  padding: 48px 0 44px;
+  background: linear-gradient(180deg, #efede6 0%, var(--bg) 100%);
+}
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.hero h1 {
+  font-size: clamp(27px, 3.4vw, 38px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--indigo);
+  max-width: 26ch;
+}
+.hero-lead {
+  margin-top: 12px;
+  font-size: 15.5px;
+  color: var(--ink-muted);
+  max-width: 66ch;
+}
+.hero-meta-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13.5px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+.meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+.meta-label { color: var(--ink-subtle); font-weight: 600; }
+.meta-val { color: var(--indigo); font-weight: 700; text-align: right; }
+
+/* Interactive R4 Evidence Strip */
+.r4-strip {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.r4-btn {
+  text-align: left;
+  font-family: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.r4-btn:hover { border-color: var(--teal); }
+.r4-btn.active { background: var(--indigo); color: #ffffff; border-color: var(--indigo); }
+.r4-btn .r4-stat { font-size: 21px; font-weight: 900; letter-spacing: -0.02em; }
+.r4-btn .r4-title { font-size: 13.5px; font-weight: 700; opacity: 0.92; }
+.r4-btn .r4-hint { font-size: 12px; color: var(--ink-subtle); margin-top: auto; }
+.r4-btn.active .r4-hint { color: #c7d9ea; }
+.r4-detail {
+  margin-top: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.r4-detail h3 { font-size: 16px; color: var(--indigo); margin-bottom: 4px; }
+.r4-detail p { font-size: 14px; color: var(--ink-muted); max-width: 78ch; }
+
+/* Filter Bar & Badges */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.seg-btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.seg-btn:hover { color: var(--indigo); border-color: var(--indigo); }
+.seg-btn.active { background: var(--indigo); color: #ffffff; border-color: var(--indigo); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.badge-top { background: var(--vermilion-soft); color: var(--vermilion); }
+.badge-inhouse { background: var(--teal-soft); color: var(--teal); }
+.badge-out { background: var(--surface-alt); color: var(--ink-muted); }
+.badge-gold { background: var(--gold-soft); color: var(--gold); }
+.badge-indigo { background: var(--indigo-soft); color: var(--indigo); }
+
+/* R1 Table */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+table.r1-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+  font-size: 14px;
+}
+.r1-table th {
+  background: var(--surface-alt);
+  color: var(--indigo);
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--line-strong);
+}
+.r1-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.r1-row { cursor: pointer; transition: background-color 0.14s ease; }
+.r1-row:hover { background: #faf9f5; }
+.r1-row.is-top { background: #fffaf8; }
+.r1-row.is-top:hover { background: #fdf3ef; }
+.r1-expand td {
+  background: var(--surface-tint);
+  padding: 16px 18px;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.r1-expand-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+}
+
+.ainz-tech-strip {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.tech-chip {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+.tech-chip strong { color: var(--indigo); }
+
+/* R2 Showcase */
+.split-panel {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  align-items: start;
+}
+.img-frame {
+  position: relative;
+  background: #faf9f6;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.img-frame img {
+  width: 100%;
+  height: 410px;
+  object-fit: contain;
+  display: block;
+}
+.zoom-pill {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(15, 43, 70, 0.86);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.detail-stack { display: flex; flex-direction: column; gap: 14px; }
+.detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.detail-head h3 { font-size: 22px; font-weight: 900; color: var(--indigo); }
+.detail-sub { font-size: 13.5px; color: var(--teal); font-weight: 700; margin-top: 2px; }
+.quote-block {
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 13px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.kv-grid {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 8px 12px;
+  font-size: 13.8px;
+}
+.kv-k { font-weight: 700; color: var(--ink-subtle); }
+.kv-v { color: var(--ink); }
+.swatch-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.swatch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.swatch-btn:hover { border-color: var(--indigo); }
+.swatch-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.18); }
+
+/* 3-Column Comparison Mode */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.compare-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.compare-item .img-frame img { height: 220px; }
+.compare-item h3 { font-size: 18px; font-weight: 800; color: var(--indigo); }
+.compare-item .sub { font-size: 13px; color: var(--teal); font-weight: 700; }
+.compare-item p { font-size: 13.5px; color: var(--ink-muted); }
+.divider-list { border-top: 1px solid var(--line); padding-top: 10px; font-size: 13px; display: flex; flex-direction: column; gap: 5px; }
+
+/* Duplicate Check Panel */
+.dup-box {
+  margin-top: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.dup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.search-input {
+  font-family: inherit;
+  font-size: 13.5px;
+  padding: 8px 13px;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink);
+  min-width: 260px;
+}
+.dup-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 8px;
+}
+.dup-chip {
+  padding: 8px 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-size: 12.8px;
+}
+.dup-chip strong { color: var(--indigo); }
+.dup-chip span { display: block; color: var(--ink-subtle); font-size: 12px; margin-top: 2px; }
+
+/* R3 Products */
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.prod-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prod-card .img-frame img { height: 225px; object-fit: cover; }
+.prod-card h3 { font-size: 18.5px; font-weight: 800; color: var(--indigo); }
+.prod-summary { font-size: 13.5px; color: var(--ink-muted); }
+.mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: var(--surface-alt);
+  padding: 4px;
+  border-radius: 99px;
+}
+.mode-switch button {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: var(--ink-muted);
+  padding: 6px 8px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.mode-switch button.active {
+  background: var(--surface);
+  color: var(--indigo);
+}
+.mode-note {
+  background: var(--surface-tint);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.four-el {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 6px 10px;
+  font-size: 13px;
+}
+.four-el dt { font-weight: 800; color: var(--indigo); }
+.four-el dd { color: var(--ink-muted); }
+
+/* Signature Interactive Matrix Simulator */
+.sim-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+}
+.sim-pickers { display: flex; flex-direction: column; gap: 18px; }
+.picker-group h3 { font-size: 14px; font-weight: 800; color: var(--indigo); margin-bottom: 8px; }
+.picker-list { display: flex; flex-direction: column; gap: 7px; }
+.pick-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  font-family: inherit;
+  padding: 10px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.pick-btn:hover { border-color: var(--indigo); }
+.pick-btn.active { background: var(--indigo); color: #ffffff; border-color: var(--indigo); }
+.pick-btn small { font-size: 12px; opacity: 0.8; display: block; }
+.sim-output {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sim-thumbs {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px;
+  align-items: center;
+}
+.sim-thumb-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  text-align: center;
+}
+.sim-thumb-box img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  display: block;
+}
+.sim-thumb-box .lbl { font-size: 12.5px; font-weight: 700; color: var(--indigo); margin-top: 6px; }
+.sim-plus {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--indigo);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+}
+.sim-specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.sim-spec-cell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  font-size: 13px;
+}
+.sim-spec-cell strong { display: block; font-size: 12px; color: var(--ink-subtle); margin-bottom: 3px; }
+
+/* R5 Script & R6 Q&A */
+.script-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 24px;
+}
+.script-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+  margin-top: 12px;
+}
+.script-jp {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 13.8px;
+  line-height: 1.75;
+}
+.qa-list { display: flex; flex-direction: column; gap: 10px; }
+.qa-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 15px 18px;
+}
+.qa-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+.qa-title { font-size: 15px; font-weight: 800; color: var(--indigo); }
+.qa-jp-box {
+  margin-top: 10px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.qa-branch {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-strong);
+  font-size: 13.3px;
+  color: var(--ink-muted);
+  display: none;
+}
+.qa-branch.open { display: block; }
+
+/* Travel & Checklist */
+.prep-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.prep-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+.timeline { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+.tl-row {
+  display: grid;
+  grid-template-columns: 98px 1fr;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px;
+}
+.tl-row:last-child { border-bottom: none; padding-bottom: 0; }
+.tl-time { font-weight: 800; color: var(--vermilion); }
+
+.progress-wrap {
+  margin: 12px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--surface-alt);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--teal);
+  width: 0%;
+  transition: width 0.25s ease;
+}
+.check-list { display: flex; flex-direction: column; gap: 8px; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13.5px;
+}
+.check-item input { margin-top: 4px; accent-color: var(--indigo); width: 16px; height: 16px; flex-shrink: 0; }
+.check-item.checked span { text-decoration: line-through; color: var(--ink-subtle); }
+
+/* Lightbox Modal */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  background: var(--surface);
+  border-radius: var(--radius);
+  max-width: 1040px;
+  width: 100%;
+  max-height: 92vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lightbox-inner img {
+  width: 100%;
+  max-height: 76vh;
+  object-fit: contain;
+  background: #faf9f6;
+  border-radius: var(--radius-sm);
+}
+.lightbox-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 120;
+  background: var(--indigo);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 99px;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+footer {
+  padding: 28px 0 44px;
+  color: var(--ink-subtle);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Ochokoro Branding Studio */
+.pillar-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.pillar-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.pillar-box h3 { font-size: 16px; font-weight: 800; color: var(--indigo); margin: 8px 0 6px; }
+.pillar-box p { font-size: 13.5px; color: var(--ink-muted); }
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  align-items: start;
+}
+.insta-grid-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #faf8f4;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+.insta-tile {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+}
+.insta-tile img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
+.prop-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+.prop-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-size: 13px;
+}
+.prop-item strong { color: var(--indigo); display: block; font-size: 13.5px; }
+.prop-item .area { font-size: 12px; color: var(--teal); font-weight: 700; margin: 2px 0 4px; }
+.prop-item .copy { font-size: 12.2px; color: var(--ink-muted); }
+
+@media (max-width: 1120px) {
+  .nav-links { display: none; }
+}
+@media (max-width: 1020px) {
+  .r4-strip { grid-template-columns: repeat(2, 1fr); }
+  .split-panel, .sim-wrap, .script-grid, .prep-grid, .r1-expand-grid, .studio-grid { grid-template-columns: 1fr; }
+  .compare-grid, .prod-grid, .pillar-3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .container, .topbar-inner { padding-left: 14px; padding-right: 14px; }
+  .topbar-inner { flex-wrap: wrap; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+  .top-actions { width: 100%; flex-wrap: wrap; gap: 6px; }
+  .brand { font-size: 14px; }
+  .hero-meta-box { min-width: 0; width: 100%; }
+  .search-input { min-width: 0; width: 100%; }
+  .r4-strip, .sim-specs, .prop-grid { grid-template-columns: 1fr; }
+  .sim-thumbs { grid-template-columns: 1fr; }
+  .sim-plus { margin: 0 auto; }
+  .top-actions .btn-sm { padding: 5px 9px; font-size: 11.5px; }
+  .kv-grid { grid-template-columns: 1fr; gap: 3px; }
+  .qa-top { flex-direction: column; }
+  .tl-row { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#top" class="brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      アインズ DAY2 準備ビューア
+    </a>
+    <nav class="nav-links" aria-label="セクション移動">
+      <a href="#evidence">根拠</a>
+      <a href="#r1">R1 調査</a>
+      <a href="#ochokoro-branding">R2 キャラ</a>
+      <a href="#r3">R3 主力</a>
+      <a href="#roadmap">3段階展開</a>
+      <a href="#brand">ブランド</a>
+      <a href="#r5r6">R5・R6</a>
+      <a href="#prep">日程・確認</a>
+    </nav>
+    <div class="top-actions">
+      <a class="btn btn-primary btn-sm" href="./ochokoro_story_JP.html" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        過去編小説
+      </a>
+      <a class="btn btn-sm" href="#ochokoro-final">最終キャラ案</a>
+      <a class="btn btn-sm" href="./おちょころ_企画レポート_JP.pdf" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        企画レポート (14p)
+      </a>
+      <a class="btn btn-primary btn-sm" href="./おちょころ_発表資料_シンプル版_JP.pdf" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        発表資料 (10p)
+      </a>
+      <a class="btn btn-sm" href="./DAY2_인터랙티브_결과뷰어_KR.html" lang="ko" title="韓国語版に切替">KR</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero & R4 Evidence -->
+  <section class="hero" id="evidence">
+    <div class="container">
+      <div class="hero-top">
+        <div>
+          <h1>観光 × プロダクトパビリオン<br>DAY2 最終準備 結果ビューア</h1>
+          <p class="hero-lead">
+            11月27日（金）のアインズ様 本社・工場見学およびデザイナー様との検討に向けて整理した日本語総合ダッシュボードです。
+            流行グッズ8種調査（R1）、キャラクター「おちょころ」と過去編小説（R2）、主力2品と3段階ロードマップ（R3）、口頭ブリーフィング原稿（R5）・確認質問10選（R6）を一画面で閲覧できます。
+          </p>
+        </div>
+        <div class="hero-meta-box">
+          <div class="meta-row"><span class="meta-label">集合日時</span><span class="meta-val num">11/27(金) 14:30 JR野洲駅</span></div>
+          <div class="meta-row"><span class="meta-label">見学時間</span><span class="meta-val num">15:00–17:00 アインズ本社・工場</span></div>
+          <div class="meta-row"><span class="meta-label">最終発表</span><span class="meta-val num">DAY4 · 12/18(金) BKC</span></div>
+          <div class="meta-row"><span class="meta-label">中核戦略</span><span class="meta-val">主力2品 ＋ 紙の先の3段階</span></div>
+        </div>
+      </div>
+
+      <div class="r4-strip" role="tablist" aria-label="R4 核心根拠カード">
+        <button class="r4-btn active" data-r4="0" type="button">
+          <span class="r4-stat num">91.6% 水への偏り</span>
+          <span class="r4-title">アインズアンケート認知ギャップ</span>
+          <span class="r4-hint">クリックして根拠・留意点を見る</span>
+        </button>
+        <button class="r4-btn" data-r4="1" type="button">
+          <span class="r4-stat num">日帰り 92.2%</span>
+          <span class="r4-title">滞在・消費（4,943 vs 21,773円）</span>
+          <span class="r4-hint">クリックして根拠・留意点を見る</span>
+        </button>
+        <button class="r4-btn" data-r4="2" type="button">
+          <span class="r4-stat num">2027 滋賀DC</span>
+          <span class="r4-title">4大テーマ × アインズ150周年</span>
+          <span class="r4-hint">クリックして根拠・留意点を見る</span>
+        </button>
+        <button class="r4-btn" data-r4="3" type="button">
+          <span class="r4-stat num">プラ体積 1/15</span>
+          <span class="r4-title">本社実設備 × MLGs 環境配慮</span>
+          <span class="r4-hint">クリックして根拠・留意点を見る</span>
+        </button>
+      </div>
+      <div class="r4-detail" id="r4-detail" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- R1 Market Research -->
+  <section id="r1">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>R1. 2025–2026 流行グッズ8種調査 ＆ アインズ様製造適性</h2>
+          <p class="sec-desc">アクリルやぬいぐるみのように外注比率が高くなりやすい品目に加えて、アインズ本社・工場の特殊印刷・パッケージ設備で直接製造しやすい上位3種（TOP 3）を抽出しました。行をクリックすると適用例・一次情報リンク・加工ポイントを確認できます。</p>
+        </div>
+      </div>
+
+      <div class="controls" id="r1-filters">
+        <button class="seg-btn active" data-filter="all" type="button">全8種</button>
+        <button class="seg-btn" data-filter="top3" type="button">印刷・パッケージ TOP 3</button>
+        <button class="seg-btn" data-filter="inhouse" type="button">自社内製化可能</button>
+        <button class="seg-btn" data-filter="outsource" type="button">外注・部品連携型</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="r1-table">
+          <thead>
+            <tr>
+              <th style="width:98px;">区分</th>
+              <th style="width:210px;">グッズ形態</th>
+              <th style="width:140px;">価格帯</th>
+              <th>人気根拠の要約（2025–2026）</th>
+              <th style="width:210px;">アインズ製造適性</th>
+            </tr>
+          </thead>
+          <tbody id="r1-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="ainz-tech-strip">
+        <span style="font-size:13px; font-weight:800; color:var(--indigo); margin-right:4px;">アインズ様 実保有技術：</span>
+        <span class="tech-chip"><strong>コールドフォイル</strong> 非加熱銀箔＋グラデーション</span>
+        <span class="tech-chip"><strong>UV擬似エンボス</strong> 艶・マット質感対比</span>
+        <span class="tech-chip"><strong>水なし印刷 &amp; eLinks®</strong> 有害廃水ゼロ</span>
+        <span class="tech-chip"><strong>脱プラ印刷</strong> PP代替UVニス（1/15）</span>
+        <span class="tech-chip"><strong>びわ湖環境ペーパー</strong> MLGs対応</span>
+        <span class="tech-chip"><strong>ここ滋賀 COCOトライ</strong> 1F客単価1,546円テスト販路</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- R2 Character Concepts (Hidden reference baseline, JP-localized for consistency) -->
+  <section id="r2" hidden>
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>R2. オリジナルキャラクター試案3種（非重複検証済み）</h2>
+          <p class="sec-desc">既存の滋賀・近畿圏キャラクター16種を事前調査し、重複（例：近江八幡「赤コン君」、大阪府警「かもすけ」）を回避した3案です。画像クリックで拡大できます。</p>
+        </div>
+        <div class="controls" style="margin-bottom:0;">
+          <button class="seg-btn active" id="r2-mode-detail" type="button">詳細タブ表示</button>
+          <button class="seg-btn" id="r2-mode-compare" type="button">3案並列比較</button>
+        </div>
+      </div>
+
+      <div id="r2-detail-wrap">
+        <div class="controls" id="r2-tabs">
+          <button class="seg-btn active" data-char="0" type="button">案A · びわトト（ビワマス）</button>
+          <button class="seg-btn" data-char="1" type="button">案B · びわぱる（びわ湖真珠）</button>
+          <button class="seg-btn" data-char="2" type="button">案C · おちょころ（おちょこ×近江茶）</button>
+        </div>
+        <div class="split-panel" id="r2-panel"></div>
+      </div>
+
+      <div id="r2-compare-wrap" class="compare-grid" style="display:none;"></div>
+
+      <div class="dup-box">
+        <div class="dup-header">
+          <div>
+            <h3 style="font-size:16px; font-weight:800; color:var(--indigo);">既存 滋賀・近畿圏キャラクター16種 重複事前確認リスト</h3>
+            <p style="font-size:13px; color:var(--ink-subtle);">検索欄に地域・名称・モチーフを入力すると回避根拠をすぐ確認できます。</p>
+          </div>
+          <input type="search" id="dup-search" class="search-input" placeholder="例：近江八幡、ビワマス、近江牛、忍者..." aria-label="既存キャラクター重複検索">
+        </div>
+        <div class="dup-chips" id="dup-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ochokoro Branding Deep-Dive Studio -->
+  <section id="ochokoro-branding">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>R2. キャラクター「おちょころ」 — 滋賀で、ひと息。</h2>
+          <p class="sec-desc">信楽焼の小さなおちょこから生まれた器の精霊「おちょころ」の基本造形を固定したまま、滋賀各地の名産品や穏やかなアースカラーの物語で展開するキャラクター企画です。</p>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        </div>
+      </div>
+
+      <div id="ochokoro-final" style="background:#fff;border:2px solid #c84b31;border-radius:14px;padding:16px;margin-bottom:20px;">
+        <span class="badge badge-gold">最終案確定 · 11/26</span>
+        <h3 style="margin:8px 0 4px;font-size:18px;">おちょころ 最終デザインシート2種</h3>
+        <p class="sec-desc" style="margin-bottom:12px;">基本形（丸い胴体＋傾いた信楽焼のおちょこ帽＋朝宮茶の葉）を最終案として採用します。画像をクリックすると原寸で開きます。</p>
+        <div style="display:grid;gap:14px;">
+          <a href="./images/final/ochokoro_final_modelsheet.jpg" target="_blank" rel="noopener"><img src="./images/final/ochokoro_final_modelsheet.jpg" alt="おちょころ 最終モデルシート：360°ビュー、表情10種、観光シーン" style="width:100%;height:auto;border-radius:10px;border:1px solid #e2ded5;display:block;"></a>
+          <a href="./images/final/ochokoro_final_variations.jpg" target="_blank" rel="noopener"><img src="./images/final/ochokoro_final_variations.jpg" alt="おちょころ 最終バリエーション展開10種シート" style="width:100%;height:auto;border-radius:10px;border:1px solid #e2ded5;display:block;"></a>
+          <h3 style="margin:6px 0 0;font-size:16px;">グッズ展開モックアップ（立体シール・手帳ステッカー・しおり・ギフト箱・ティーバッグ箱）</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+            <a href="./images/final/ochokoro_goods_lineup_a.png" target="_blank" rel="noopener"><img src="./images/final/ochokoro_goods_lineup_a.png" alt="おちょころ グッズ展開ラインアップA案" style="width:100%;height:auto;border-radius:10px;border:1px solid #e2ded5;display:block;"></a>
+            <a href="./images/final/ochokoro_goods_lineup_b.jpg" target="_blank" rel="noopener"><img src="./images/final/ochokoro_goods_lineup_b.jpg" alt="おちょころ グッズ展開ラインアップB案" style="width:100%;height:auto;border-radius:10px;border:1px solid #e2ded5;display:block;"></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story Novel & Digital Touchpoints Spotlight -->
+      <div id="ochokoro-story-spotlight" style="background:#fbf8f3;border:1px solid #d9cbb8;border-radius:14px;padding:20px;margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px;">
+          <div>
+            <span class="badge badge-gold">新規追加 · オリジン物語 ＆ SNS試作</span>
+            <h3 style="margin:8px 0 4px;font-size:19px;color:#0f2b46;">おちょころ ものがたり（過去編・全3話）＆ Instagram・LINE試作</h3>
+            <p class="sec-desc" style="margin:0;">信楽の窯元から捨てられカラスに攫われてびわ湖へ落ち、元の主人に祟ろうと付喪神（つくもがみ）として目覚めた器が、病を抱えた朝宮の茶農家に「茶葉の鉢」として拾われたことで怨念がほどけ、心優しい精霊へ生まれ変わる全3話の小説と現代編試作です。</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <a class="btn btn-primary btn-sm" href="./ochokoro_story_JP.html" target="_blank" rel="noopener">過去編小説 全3話を読む →</a>
+            <a class="btn btn-sm" href="./おちょころ_発表資料_JP.pdf" target="_blank" rel="noopener">発表資料 詳細版 (16p)</a>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+          <a href="./ochokoro_story_JP.html#ep1" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;background:#fff;border:1px solid #e2ded5;border-radius:10px;overflow:hidden;display:block;">
+            <img src="./images/story/story_ep02_crow_biwa.jpg" alt="第一話 雨の軒下、びわ湖の付喪神" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:10px 12px;"><strong style="font-size:13.5px;color:#0f2b46;display:block;">第一話｜雨の軒下、びわ湖の付喪神</strong><span style="font-size:12px;color:#4a5a6a;">捨てられた夜、カラスに攫われて湖底で目覚めた祟りの魂</span></div>
+          </a>
+          <a href="./ochokoro_story_JP.html#ep2" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;background:#fff;border:1px solid #e2ded5;border-radius:10px;overflow:hidden;display:block;">
+            <img src="./images/story/story_ep02_tea_sprout.jpg" alt="第二話 朝宮の窓辺、ほどけた怨念" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:10px 12px;"><strong style="font-size:13.5px;color:#0f2b46;display:block;">第二話｜朝宮の窓辺、ほどけた怨念</strong><span style="font-size:12px;color:#4a5a6a;">病床の茶農家に「茶葉の鉢」として愛され、優しい精霊に定住</span></div>
+          </a>
+          <a href="./ochokoro_story_JP.html#ep3" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;background:#fff;border:1px solid #e2ded5;border-radius:10px;overflow:hidden;display:block;">
+            <img src="./images/story/story_ep03_biwa_tea.jpg" alt="第三話 許しの一葉と、夕暮れの茶" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:10px 12px;"><strong style="font-size:13.5px;color:#0f2b46;display:block;">第三話｜許しの一葉と、夕暮れの茶</strong><span style="font-size:12px;color:#4a5a6a;">かつての窯へ一葉を残し、いまはびわ湖岸で旅人に一服を届ける</span></div>
+          </a>
+          <a href="./ochokoro_insta_comic_JP.png" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;background:#fff;border:1px solid #e2ded5;border-radius:10px;overflow:hidden;display:block;">
+            <img src="./ochokoro_line_stamp_JP.png" alt="LINEスタンプ ＆ Instagram 4コマ漫画試作" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:10px 12px;"><strong style="font-size:13.5px;color:#0f2b46;display:block;">現代編｜Instagram 4コマ × LINE 8種</strong><span style="font-size:12px;color:#4a5a6a;">デジタル接点・SNSエッセイ漫画との連動試作</span></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="pillar-3" hidden>
+        <div class="pillar-box">
+          <span class="badge badge-gold">軸1 · 信楽焼ベース</span>
+          <h3>千年陶芸「器（うつわ）」の精霊</h3>
+          <p>甲賀・信楽の窯で焼かれた小さなおちょこから生まれた精霊。伝統工芸の現代的表現として、<strong>「器だからこそ、滋賀の食・茶・夜をすべて包み込む」</strong>物語を持ちます。</p>
+        </div>
+        <div class="pillar-box">
+          <span class="badge badge-inhouse">軸2 · 本体固定 × ご当地小物の差し替え</span>
+          <h3>本体は変えず、両手の小物のみ展開</h3>
+          <p>丸いアイボリーの体・斜めのおちょこ帽・近江茶の葉は1pxも変えず固定したまま、手に持つ名産小物（近江茶・近江牛・サラダパン・鳥居・ガラス風鈴など）だけを差し替えて県内13市へ拡張できます。</p>
+        </div>
+        <div class="pillar-box">
+          <span class="badge badge-top">軸3 · 淡色・大人かわいいトーン</span>
+          <h3>20–40代が手帳やマグに添えたくなる配色</h3>
+          <p>原色を避けた淡色5カラーパレット（クリーム・テラコッタ・抹茶・ベージュ・金箔）と穏やかな語尾（〜ころ）により、手帳・タンブラー・カフェの記録写真に自然と溶け込みます。</p>
+        </div>
+      </div>
+
+      <div class="controls" id="ocho-tabs" hidden>
+        <button class="seg-btn active" data-otab="0" type="button">ターンアラウンド · 表情6種</button>
+        <button class="seg-btn" data-otab="1" type="button">滋賀名物モジュール拡張8種</button>
+        <button class="seg-btn" data-otab="2" type="button">シール案 Vol.1（美食・茶）</button>
+        <button class="seg-btn" data-otab="3" type="button">シール案 Vol.2（ナイト・モックアップ）</button>
+        <button class="seg-btn" data-otab="4" type="button">Instagram 3×3 フィード構成例</button>
+      </div>
+
+      <div class="studio-grid" hidden>
+        <div id="ocho-visual-slot"></div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+            <h3 style="font-size:17px; font-weight:800; color:var(--indigo);">本体固定 × 滋賀名物8種マッピング</h3>
+            <div class="controls" id="ocho-prop-filters" style="margin-bottom:0;">
+              <button class="seg-btn active" data-opcat="all" type="button">全8種</button>
+              <button class="seg-btn" data-opcat="food" type="button">美食・茶・発酵</button>
+              <button class="seg-btn" data-opcat="spot" type="button">観光・ナイト</button>
+            </div>
+          </div>
+          <div class="prop-grid" id="ocho-prop-grid"></div>
+          <div style="margin-top:12px; background:var(--surface-tint); border-radius:var(--radius-sm); padding:11px 14px; font-size:13px; color:var(--ink);">
+            <strong>アインズ様 実加工仕様（案）：</strong> A6携帯サイズ和紙風粘着紙＋陶器帽・茶面・ガラス部分に <strong>UV擬似エンボス</strong>＋三日月・器に <strong>コールドフォイル金箔</strong>＋<strong>びわ湖環境ペーパー</strong> 台紙（550–680円 / ミニシール帳セット 1,300–1,500円）。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- R3 Product Concepts -->
+  <section id="r3">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>R3. おちょころ 主力2品 — 周遊トレカ × ギフトボックス</h2>
+          <p class="sec-desc">キャラクター・グッズ販売の市場根拠（文書16番）に基づき、企画を主力2品へ集約しました。ギフト箱で最初の1枚を手に取り → 現地周遊で集め → 夜の限定カードで宿泊へつなげる設計です。</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px;">
+        <figure style="margin:0;">
+          <img src="images/final/goods/ochokoro_card_design.png" alt="おちょころ 周遊トレーディングカードデザイン案" style="width:100%; border-radius:12px;">
+          <figcaption style="margin-top:8px; line-height:1.65;"><strong>『びわコレ』周遊トレーディングカード</strong><br>拡張10種から第1弾10枚を展開。主要拠点でノーマルカード、第2スポットでエリアカード、18時以降の宿泊・温泉利用時にコールドフォイル仕様のナイトレアを配布します（63×88mm）。初期は現場配布・ギフト箱封入で認知を広げ、ファン定着後に5枚入り350円の販売パック（ひこにゃんトレカ水準）へ展開します。</figcaption>
+        </figure>
+        <figure style="margin:0;">
+          <img src="images/final/goods/ochokoro_giftbox_design.png" alt="おちょころ ギフトボックスデザイン案" style="width:100%; border-radius:12px;">
+          <figcaption style="margin-top:8px; line-height:1.65;"><strong>『滋賀の宝箱』ギフトボックス（主力）</strong><br>共通の外箱＋和菓子・茶事業者ごとの帯差し替えにより小ロット連携を可能にします。蓋裏に滋賀7圏域マップ、底面に組み立て式ペーパースタンド・しおりカード・トレカ1枚を封入。約200×140×50mmの貼箱・トムソン構造、非塗工板紙・箔枠・窓フィルム不使用で、中身込み1,500〜2,500円を想定しています。</figcaption>
+        </figure>
+      </div>
+      <div id="roadmap" style="margin-top:32px;">
+        <h3 style="margin:0 0 6px;">紙印刷の先へ広がる展開 — 3段階ロードマップ</h3>
+        <p class="sec-desc" style="margin:0 0 16px;">新しいキャラクターは、最初から「キャラクター目当て」で選ばれるわけではありません。まずは<strong>「その土地へ行く理由・手に取る理由」</strong>を商品に込め、認知を低コストで育てたうえで立体展開へ進みます。</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+          <div style="border:1px solid #dbe3ee; border-top:5px solid #0284c7; border-radius:12px; padding:16px; background:#fff; color:#1e293b; line-height:1.65;">
+            <div style="font-size:13px; font-weight:800; color:#0284c7;">第1段階 · 知ってもらう（低コスト）</div>
+            <div style="font-weight:900; font-size:17px; margin:4px 0 8px;">LINEスタンプ · SNS · 配布カード</div>
+            · LINEスタンプ：ちいかわと同様にスタンプからグッズへ展開（江戸川区広報スタンプは1週間で1.1万DL）<br>
+            · トレカ：まず現場配布と箱封入で流通（マンホールカード累計約290万枚、ダムカード来訪者の62%が県外）<br>
+            · ステッカー：385〜550円のダイカットシールを少量制作し箱へ封入
+          </div>
+          <div style="border:1px solid #dbe3ee; border-top:5px solid #dc2626; border-radius:12px; padding:16px; background:#fff; color:#1e293b; line-height:1.65;">
+            <div style="font-size:13px; font-weight:800; color:#dc2626;">第2段階 · ここで買う主力</div>
+            <div style="font-weight:900; font-size:17px; margin:4px 0 8px;">地域ガチャ · 信楽焼ぐい呑み · 銘菓箱</div>
+            · 分散ガチャ（400〜500円）：市場1,960億円（2025年度・+39%）。函館「街ガチャ」は初回3,000個が1週間で完売し、142日で3万個を記録。複数スポット設置で回遊を促進<br>
+            · 本格信楽焼おちょこ：キャラクターの帽子を実物陶器で再現し、地元窯元と協業（信楽焼トトロ等の先例あり）<br>
+            · 銘菓ギフトボックス：くまモン関連売上の89%は食品が牽引
+          </div>
+          <div style="border:1px solid #dbe3ee; border-top:5px solid #0f766e; border-radius:12px; padding:16px; background:#fff; color:#1e293b; line-height:1.65;">
+            <div style="font-size:13px; font-weight:800; color:#0f766e;">第3段階 · ファンが増えた先</div>
+            <div style="font-weight:900; font-size:17px; margin:4px 0 8px;">ぬいマスコット · 販売パック · 宿泊連携</div>
+            · ぬい・目印マスコット：欲しい・好きなグッズ1位（40.4%）、2026年トレンド1位（ぬい関連34社売上849億円）。まずはガチャのミニチャームで需要を確認<br>
+            · トレカ販売パック：認知定着後に展開（ひこにゃんも20年の人気蓄積が基盤）<br>
+            · 宿泊コラボレーション：客室・アメニティ連携（ミャクミャクルーム等の先例）で宿泊率7.8%の課題に直結
+          </div>
+        </div>
+        <div style="margin-top:14px; padding:12px 16px; border-radius:10px; background:#1e3a8a; color:#fff; font-weight:700; line-height:1.6;">アインズ様の役割（案）：パッケージ・ガチャ台紙・ギフトボックス・カード・ステッカーを自社印刷で担いブランド全体を束ね、陶器・フィギュア・縫製は地域協業先が製作します。</div>
+        <p style="font-size:13px; opacity:.75; margin-top:8px;">根拠：17番調査ドキュメント ／ 文具商材の展開可否整理（事前調査レポート）</p>
+      </div>
+      <div id="brand" style="margin-top:32px;">
+        <h3 style="margin:0 0 6px;">ブランドポジショニング · 想定質問 · パートナー</h3>
+        <p class="sec-desc" style="margin:0 0 16px;">一般的なキャラクター雑貨棚で知名度を競う発想から離れ、<strong>「地域みやげ・工芸棚」</strong>で確実に選ばれる立ち位置を採ります。根拠文書：18（ブランドガイドライン）・19（キャンペーン計画）・20（ポジショニング・心理・協業）</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+          <div style="border:1px solid #dbe3ee; border-radius:12px; padding:16px; background:#fff; color:#1e293b; line-height:1.65;">
+            <div style="font-weight:900; font-size:16px; color:#1e3a8a; margin-bottom:6px;">ブランド約束「滋賀で、ひと息。」</div>
+            ① 水の次の滋賀へ：湖に加えて茶・陶芸・夜・発酵へ視点を広げる<br>② もう一か所、もう一泊：日帰り92.2%を周遊と宿泊へつなぐ<br>③ 本物でつくる：信楽焼・近江茶・滋賀銘菓・滋賀印刷の共演<br>④ 現地で出会える仕組み：配布カード・分散ガチャ・ナイトレア
+          </div>
+          <div style="border:1px solid #dbe3ee; border-radius:12px; padding:16px; background:#fff; color:#1e293b; line-height:1.65;">
+            <div style="font-weight:900; font-size:16px; color:#b91c1c; margin-bottom:6px;">Q.「ひと目で滋賀と見えにくいのでは？」</div>
+            <strong>意図：</strong> 滋賀＝水91.6%。体に湖を描くと既存の偏りが強まるため、「水の次の滋賀」を象徴する信楽焼と近江茶を顔に据えました。<br><strong>先例：</strong> ひこにゃんは兜一つで彦根を象徴し、おちょころはぐい呑みの帽子で信楽を示します。<br><strong>拡張：</strong> 湖・城・地酒・ビワイチはバリエーション10種と箱の内側地図で補完。<br><strong>補強案（試作済み）：</strong> 頭上の茶葉シルエットの中に実測地図のびわ湖ラインを織り込む意匠も用意しています。<br><img src="images/final/biwa_leaf/leaf_C2_closeup.png" alt="補強案：朝宮茶葉の中のびわ湖ライン" style="width:100%; max-width:260px; margin-top:8px; border-radius:10px;">
+          </div>
+          <div style="border:1px solid #dbe3ee; border-radius:12px; padding:16px; background:#fff; color:#1e293b; line-height:1.65;">
+            <div style="font-weight:900; font-size:16px; color:#0f766e; margin-bottom:6px;">パートナー優先順位（案）</div>
+            1. アインズ様 ＋ SNS・グラフィック担当チーム<br>2. 滋賀の老舗和菓子・茶事業者1社（共通箱＋帯差し替え）<br>3. カプセルトイ運営会社（分散設置）<br>4. 県内宿泊施設1拠点（ナイトレアカード配布）<br>5. 信楽の窯元（実物ぐい呑み制作）<br><span style="opacity:.8;">協業先の利点：「2枚目のカード配布場所」になることで来訪者が自発的に立ち寄ります。</span>
+          </div>
+        </div>
+        <p style="margin-top:12px; line-height:1.65;"><strong>集めたくなる心理設計：</strong> 最初の1枚は無償入手 → 空欄の見える10ポケットホルダー → 旅の最後に宿泊先で最も華やかなナイトレアを獲得 → 箱の中のペーパースタンドは自分で組み立てて愛着が生まれます。希少性は誠実な限定性に留め、急かす表現は使いません。</p>
+      </div>
+      <div class="prod-grid" id="r3-grid" hidden></div>
+    </div>
+  </section>
+
+  <!-- Interactive Combination Simulator (Hidden baseline, JP-localized) -->
+  <section id="simulator" hidden>
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>キャラクター × プロダクト組み合わせシミュレーター（12パターン）</h2>
+          <p class="sec-desc">デザイナー様との打ち合わせで「どのビジュアル主体とどのグッズ形態を組み合わせるか」を議論する際、ターゲット・印刷工程・2027年滋賀DC連携・提案ポイントを即座に確認できます。</p>
+        </div>
+      </div>
+
+      <div class="sim-wrap">
+        <div class="sim-pickers">
+          <div class="picker-group">
+            <h3>STEP 1 · ビジュアル主体を選択 (R2)</h3>
+            <div class="picker-list" id="sim-char-list"></div>
+          </div>
+          <div class="picker-group">
+            <h3>STEP 2 · プロダクト形態を選択 (R3)</h3>
+            <div class="picker-list" id="sim-prod-list"></div>
+          </div>
+        </div>
+        <div class="sim-output" id="sim-output" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- R5 Script & R6 Q&A -->
+  <section id="r5r6">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>R5 日本語発表原稿 ＆ R6 アインズ様確認質問10選</h2>
+          <p class="sec-desc">デザイナー様・工場ご担当者の前でそのまま読み上げ・コピーできる日本語ブリーフィング原稿と、ご回答に応じて DAY3（12/11）・DAY4（12/18）の企画をどう具体化するかを整理した質問リストです。</p>
+        </div>
+      </div>
+
+      <div class="script-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+          <div>
+            <h3 style="font-size:17px; font-weight:800; color:var(--indigo);">R5. デザイナー様向け 2〜3分 口頭ブリーフィング原稿</h3>
+            <p style="font-size:13px; color:var(--ink-subtle);">A4 1枚要約PDF または 10枚シンプル版プレゼン資料を表示しながら、以下の順でお話しいただけます。</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="copy-script-btn" type="button">発表原稿を全文コピー</button>
+        </div>
+        <div class="script-grid">
+          <div class="script-jp jp" id="r5-script-jp">
+            <p style="margin-bottom:8px;"><strong>【導入・方向性（約30秒）】</strong><br>本日は貴重なお時間をいただきありがとうございます。私たちの観光×プロダクトパビリオンチームでは、アインズ様のアンケートにある『滋賀＝水は91.6%と強いが、食や観光が印象に残りにくい』というギャップと、県の統計にある『日帰り客が約92%で滞在・周遊が課題』という点に着目しました。そこで、見て終わるパンフレットを超えて、<strong>『持ち帰りたくなる・集めたくなる・SNSに載せたくなる』</strong>、しかも<strong>アインズ様の印刷・パッケージ技術そのものが価値になるグッズ</strong>を3パターン検討してきました。</p>
+            <p style="margin-bottom:8px;"><strong>【市場調査TOP3・キャラクター（約1分）】</strong><br>まず、2025〜2026年の流行グッズを8種類調査したところ、ぬいぐるみやアクリルは外注になりやすい一方、<strong>①特殊加工デコシール＆シール帳、②ご当地トレーディングカード、③リユース可能なデザインパッケージ</strong>の3つは、紙と印刷加工で形にしやすいと考えました。貴社でどこまで対応いただけるか、ぜひ伺いたいです。キャラクターは、既存のひこにゃんや赤コン君等と被らないよう調査した上で、<strong>信楽焼のおちょこと近江茶の『おちょころ』</strong>を考え、基本形と展開10種まで描いてきました。</p>
+            <p><strong>【プロダクト案・ご相談（約1分）】</strong><br>具体的な企画としては、①周遊トレカ『びわコレ』、②Z世代のシール帳ブームを狙う『しがデコ！』、③既存名産品を高付加価値化し紙製スタンドが付くリユース箱『滋賀の宝箱』の3案を用意しています。本日の工場見学とディスカッションでは、『貴社で作りやすく、12月18日の発表までに形にできそうな仕様はどれか』『おちょころをどのグッズでどう活かすか』について率直なご意見をいただきたいです。</p>
+          </div>
+          <div style="background:var(--surface-alt); border-radius:var(--radius-sm); padding:14px 16px; font-size:13.5px;">
+            <strong style="color:var(--indigo); display:block; margin-bottom:8px;">発表のポイント整理（開始前10秒チェック）</strong>
+            <ol style="padding-left:18px; display:flex; flex-direction:column; gap:8px; color:var(--ink-muted);">
+              <li><strong>課題定義：</strong> 水91.6%への偏りと日帰り92.2%の課題を「手元に残る印刷グッズ」で解決する。</li>
+              <li><strong>現実性の担保：</strong> 外注型（アクリル・縫製）に先立ち、<strong>紙と印刷加工で内製しやすい</strong> TOP 3 を軸に設備適性を伺う。</li>
+              <li><strong>キャラクター：</strong> 既存16種と重ならない <strong>おちょころ</strong> 一本に集約。本体固定・小物差替で県内各地へ拡張可能。</li>
+              <li><strong>本日決めたいこと：</strong> 12/18最終発表までに仕上げる主力仕様と試作範囲をご相談する。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls" id="r6-filters">
+        <button class="seg-btn active" data-qcat="all" type="button">全10問</button>
+        <button class="seg-btn" data-qcat="tech" type="button">製造・仕様・12/18目標 (Q1–Q3)</button>
+        <button class="seg-btn" data-qcat="biz" type="button">流通・権利・MLGs・連携 (Q4–Q7)</button>
+        <button class="seg-btn" data-qcat="bonus" type="button">工場見学 深掘り (Q8–Q10)</button>
+      </div>
+      <div class="qa-list" id="r6-list"></div>
+    </div>
+  </section>
+
+  <!-- Schedule, Travel & Checklist -->
+  <section id="prep">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <h2>日程・移動タイムライン ＆ 出発前チェックリスト</h2>
+          <p class="sec-desc">チェック状態はお使いのブラウザ（localStorage）に自動保存されます。チーム事前連絡ボタンから確認用メッセージをワンクリックでコピーできます。</p>
+        </div>
+      </div>
+
+      <div class="prep-grid">
+        <div class="prep-panel">
+          <h3 style="font-size:17px; font-weight:800; color:var(--indigo);">11/27(金) BKC → JR野洲駅 移動タイムライン</h3>
+          <p style="font-size:13px; color:var(--ink-subtle); margin-top:4px;">本社・工場：滋賀県蒲生郡竜王町鏡2291番地3（野洲駅集合後、送迎移動）</p>
+          <div class="timeline">
+            <div class="tl-row"><div class="tl-time num">13:20–13:30</div><div><strong>BKC 出発推奨</strong> — 金曜授業直後のバス混雑を見込み60〜70分前に出発</div></div>
+            <div class="tl-row"><div class="tl-time num">約12–20分</div><div><strong>近江鉄道バス → JR南草津駅</strong>（直行シャトルまたは一般路線・東口ロータリー）</div></div>
+            <div class="tl-row"><div class="tl-time num">約12分</div><div><strong>JR琵琶湖線 上り → JR野洲駅</strong>（草津・栗東・守山・野洲、普通／快速停車）</div></div>
+            <div class="tl-row"><div class="tl-time num">14:20 目安</div><div><strong>14:30 JR野洲駅 現地集合</strong>（Teams案内で出口・送迎車両の位置を再確認）</div></div>
+            <div class="tl-row"><div class="tl-time num">15:00–17:00</div><div><strong>DAY2 アインズ本社・工場見学 ＆ デザイナー検討会</strong></div></div>
+          </div>
+
+          <div style="margin-top:18px; padding-top:14px; border-top:1px solid var(--line);">
+            <h4 style="font-size:14.5px; font-weight:800; color:var(--indigo); margin-bottom:6px;">チーム内 事前確認メッセージ（提出方法・役割・連絡事項）</h4>
+            <p style="font-size:13px; color:var(--ink-muted); margin-bottom:10px;">事前アップロード要否、メンバー間の役割分担、集合案内変更の有無を確認する際の定型文です。</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-sm" id="copy-team-jp" type="button">確認メッセージ（日本語）をコピー</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="prep-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:17px; font-weight:800; color:var(--indigo);">出発前 準備チェックリスト</h3>
+            <span class="num" id="check-count" style="font-size:13.5px; font-weight:800; color:var(--teal);">0 / 7 完了</span>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          </div>
+          <div class="check-list" id="check-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    アインズ × 立命館大学 TRY FIELD 2026「観光 × プロダクトパビリオン」・DAY2 準備結果ビューア（オフライン単独閲覧対応）
+  </div>
+</footer>
+
+<!-- Image Lightbox Modal -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="画像拡大表示">
+  <div class="lightbox-inner">
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-foot">
+      <span id="lightbox-cap" style="font-size:14px; font-weight:700; color:var(--indigo);"></span>
+      <button class="btn btn-primary btn-sm" id="lightbox-close" type="button">閉じる (Esc)</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const R4_DATA = [
+  {
+    title: "アインズ事前アンケート：『滋賀＝びわ湖・水（91.6%）』の偏りと食・観光の認知ギャップ",
+    body: "事前アンケートでは「滋賀と聞いて思い浮かぶもの」の91.6%がびわ湖・水に集中し、情報収集はInstagram等のSNSが中心である一方、食や観光の魅力が記憶に残りにくいという課題が示されました。一度眺めて終わるパンフレットを超えて、手元に残し写真を撮って持ち帰りたくなる実物印刷グッズで、食や工芸の記憶を日常に届ける必要があります。",
+    linkText: "R1・R2・R3 全案の連動根拠",
+    href: "#r1"
+  },
+  {
+    title: "滋賀県統計：延べ5,230万人のうち日帰り92.2%・宿泊7.8%（消費単価4.4倍差）",
+    body: "2025年の滋賀県観光入込客は約5,230万人（延べ数）で、日帰り92.2%（推定消費単価4,943円）に対して宿泊は7.8%（21,773円）となり、滞在時間と宿泊転換が最大のテーマです。ラ コリーナ（221万人）や黒壁スクエア（194万人）といった大型拠点から、2軒目の商店街・夕食・宿泊へつなぐ『びわコレ』トレカがこの課題を正面から解決します。",
+    linkText: "『びわコレ』周遊トレカを見る",
+    href: "#r3"
+  },
+  {
+    title: "2027年秋 滋賀デスティネーションキャンペーン（DC）4大テーマ × アインズ創業150周年",
+    body: "2027年秋の滋賀DCは①推し・聖地巡礼 ②ナイトコンテンツ ③歴史・文化・伝統 ④ヘルス＆ウェルネスを4大テーマに掲げています。1877年4月創業のアインズ様にとっても2027年は創業150周年の節目に当たるため、長期展開できるシリーズ企画（デコシール・ナイトレアカード・近江茶ウェルネス箱）として高い親和性を持ちます。",
+    linkText: "3段階ロードマップで確認",
+    href: "#roadmap"
+  },
+  {
+    title: "アインズ本社実設備（竜王町）× MLGs（マザーレイクゴールズ）脱プラ・水なし印刷",
+    body: "アインズ様の本社・工場は商業印刷やパッケージ製造に加え、コールドフォイル、UV擬似エンボス、水なし印刷（有害廃水ゼロ）、脱プラ印刷（PPフィルム比プラスチック体積約1/15）、びわ湖環境ペーパーを備え、さらに東京『ここ滋賀（COCOトライ）』の運営知見をお持ちです。",
+    linkText: "R6 工場見学質問を確認",
+    href: "#r5r6"
+  }
+];
+
+const R1_ITEMS = [
+  {
+    id: 1, rank: "★ TOP 1", isTop: true, cat: "inhouse",
+    name: "特殊印刷デコシール ＆ ミニシール帳",
+    shape: "型抜き（トムソン）シールシート ＋ UV立体質感ニス ＋ 紙製ミニバインダー",
+    price: "400–880円（シール） / 1,200–1,800円（シール帳）",
+    fit: "◎ 最良（自社内製化）",
+    why: "2025–2026『平成女児・シル活』ブーム。クーリア「ボンボンドロップシール」累計出荷2,100万枚突破、日経トレンディ2026年ヒット予測3位。",
+    shiga: "サラダパン・近江牛・ビワマス・湖畔名所をスマホケースや手帳に貼ってInstagram（#しがデコ）で共有したくなる「しがデコ！」",
+    tech: "厚盛りUV擬似エンボス ＋ コールドフォイル ＋ ハーフカットトムソン ＋ 脱プラ台紙",
+    links: [
+      { label: "PR TIMES（累計2,100万枚）", url: "https://prtimes.jp/main/html/rd/p/000000149.000029212.html" },
+      { label: "Oricon（日経2026年3位）", url: "https://www.oricon.co.jp/news/2490655/full/" }
+    ]
+  },
+  {
+    id: 2, rank: "★ TOP 2", isTop: true, cat: "inhouse",
+    name: "ご当地トレーディングカード（収集型）",
+    shape: "TCG規格（63×88mm）高級紙 ＋ 銀箔・エンボス ＋ 折畳み紙ホルダー",
+    price: "無料（施設・利用条件） / 300–500円",
+    fit: "◎ 最良（自社内製化）",
+    why: "マンホールカード（1,000種以上）やLOGet!CARDのように「集めること自体が旅の目的」となり、周辺商店への送客効果が実証済み。",
+    shiga: "ラ コリーナや黒壁等でノーマルカードを配布し、周辺飲食店や宿泊施設で箔押し『ナイトレアカード』を届ける「びわコレ」",
+    tech: "高級紙オフセット ＋ コールドフォイル ＋ UV擬似エンボス ＋ 可変ナンバリング（DPS）",
+    links: [
+      { label: "GKP マンホールカード公式", url: "https://www.gk-p.jp/activity/mc/" },
+      { label: "LOGet!CARD 公式", url: "https://loget-card.jp/" }
+    ]
+  },
+  {
+    id: 3, rank: "★ TOP 3", isTop: true, cat: "inhouse",
+    name: "リユースストーリー・菓子ギフトBOX",
+    shape: "展開式特殊トムソン箱 ＋ 内面マップ印刷 ＋ 脱プラペーパースタンド",
+    price: "800–2,400円（既存銘菓・茶セット）",
+    fit: "◎ 最良（アインズ様本業）",
+    why: "観光客の『ジャケ買い』および喫食後の小物入れリユース需要が拡大。パッケージ自体が地域のストーリーメディアとして機能します。",
+    shiga: "開くとびわ湖グルメ地図と組み立て式ペーパースタンドが現れる「ひらいて旅する 滋賀の宝箱」（既存茶・菓子の再編集）",
+    tech: "精密トムソン設計 ＋ 水なし印刷 ＋ 脱プラ印刷（1/15） ＋ びわ湖環境ペーパー",
+    links: [
+      { label: "JPDA 日本パッケージデザイン協会", url: "https://library.jpda.or.jp/pd_forest/jp_pd/" },
+      { label: "アインズ 脱プラ印刷", url: "https://mono.ipros.com/product/detail/2000552668/" }
+    ]
+  },
+  {
+    id: 4, rank: "4位", isTop: false, cat: "inhouse",
+    name: "重ね捺しスタンプ台紙・御城印（紙製）",
+    shape: "多色重ね捺し吸水ハガキ・折畳み台紙 / 箔押し御城印",
+    price: "無料〜500円",
+    fit: "◎ 良（単価が低く統合推奨）",
+    why: "安土城築城450年重ね捺しラリーなど4〜5か所を巡り1枚の絵を完成させる達成感が、周遊行動を直接後押しします。",
+    shiga: "昼の寺社・城郭3か所と夕方の飲食店1か所を巡って完成する滋賀多色スタンプ台紙（案1・3への組み込み推奨）",
+    tech: "用紙選定・折加工の自社内製が容易",
+    links: [
+      { label: "近江八幡 安土ラリー", url: "https://www.omi8.com/event/detail_1224.html" },
+      { label: "3県連動ラリー", url: "https://sanken-toyotomi2026.jp/" }
+    ]
+  },
+  {
+    id: 5, rank: "5位", isTop: false, cat: "outsource",
+    name: "アクリルスタンド・キーホルダー（アクスタ）",
+    shape: "透明アクリル板UVフルカラー印刷 ＋ 台座",
+    price: "800–1,800円",
+    fit: "△ 中（外注・脱プラ配慮 → 紙代替）",
+    why: "プラスワン調査『欲しい推し活グッズ1位（43.8%）』。旅先で風景や料理と一緒に撮影する定番アイテムとして定着しています。",
+    shiga: "樹脂の代わりにアインズ様の厚手環境用紙で作る『組み立て式ペーパースタンド』（案3に同梱）として脱プラ再構築が可能",
+    tech: "アクリル本体は協力会社外注。環境配慮の文脈で紙製スタンドへ切り替えると自社内製化可能",
+    links: [
+      { label: "宣伝会議（アクスタ43.8%）", url: "https://www.sendenkaigi.com/marketing/media/sendenkaigi/031472/" },
+      { label: "eeo Media 調査記事", url: "https://eeo.today/media/2024/08/30/167505/" }
+    ]
+  },
+  {
+    id: 6, rank: "6位", isTop: false, cat: "outsource",
+    name: "マスコットぬいぐるみキーホルダー（ぬい活）",
+    shape: "手のひらサイズぬいぐるみ（ボールチェーン） / ミニポーチ",
+    price: "1,500–2,800円",
+    fit: "▽ 低（縫製外注・原価高）",
+    why: "タイトー2026調査で3年連続人気1位（40.4%）、2026年トレンド1位は『めじるしマスコット・チャーム』。旅先のぬい撮りが定着。",
+    shiga: "ぬいぐるみ単体の先行生産に先立ち、ぬい撮りの背景台紙や収納用ギフト箱・台紙連携として第3段階で展開",
+    tech: "縫製製造は印刷設備外の領域。台紙やパッケージ箱をアインズ様で担当可能",
+    links: [
+      { label: "PR TIMES タイトー2026調査", url: "https://prtimes.jp/main/html/rd/p/000000858.000041970.html" }
+    ]
+  },
+  {
+    id: 7, rank: "7位", isTop: false, cat: "outsource",
+    name: "ガチャ・ブラインドボックス",
+    shape: "カプセルトイ または 紙製ブラインド小箱（ランダム5–8種）",
+    price: "400–500円（ガチャ） / 600–900円（箱）",
+    fit: "○ 中上（紙ブラインド箱・台紙限定）",
+    why: "JACTA発表2025年度カプセルトイ市場1,960億円（前年比+39%）。400〜500円帯が主力（48.1%）で収集心理を刺激します。",
+    shiga: "プラカプセルの代案として、滋賀7圏域のカード・シール・小物を封入した『紙製ブラインドピロー箱』展開も可能",
+    tech: "紙製ブラインドピロー箱・小箱と封入カード／シールはアインズ様の中核領域",
+    links: [
+      { label: "PR TIMES JACTA 1,960億円", url: "https://prtimes.jp/main/html/rd/p/000000001.000178228.html" }
+    ]
+  },
+  {
+    id: 8, rank: "8位", isTop: false, cat: "outsource",
+    name: "缶バッジ・ピンバッジ",
+    shape: "丸型ブリキ缶バッジ / 金属エナメルピンズ",
+    price: "300–600円（缶） / 600–1,200円（ピンズ）",
+    fit: "△ 中（本体外注＋台紙自社）",
+    why: "NEXER×ローカルプランニング調査でグッズ保有者の47.8%が『バッグにさりげなく付けられるピンバッジ』を支持。",
+    shiga: "ビワイチ（自転車一周）のバッグ・帽子向けシンプルピンズ ＋ アインズ様のストーリー台紙の組み合わせ",
+    tech: "金属・缶成形は協力外注となる一方、高級台紙・ブラインド封筒は自社内製可能",
+    links: [
+      { label: "PR TIMES NEXER ピンズ調査", url: "https://prtimes.jp/main/html/rd/p/000003411.000044800.html" }
+    ]
+  }
+];
+
+const R2_CHARS = [
+  {
+    id: "biwatoto",
+    badge: "案A · 全世代・ファミリー向け",
+    name: "びわトト",
+    sub: "びわ湖の宝石「ビワマス」× 近江米おにぎりリュック",
+    img: "./images/char_01_biwatoto.jpg",
+    pdf: "./おちょころ_企画レポート_JP.pdf",
+    quote: "「びわ湖の奥に住んでいたけれど『どうして皆、水を見るだけで美味しい滋賀のごはんを食べて帰らないの！？』と陸へ上がった食いしん坊の美食探検家。名店を見つけると銀鱗がサーモンピンクに輝く。」",
+    motif: "びわ湖固有種ビワマス ＋ 近江米おにぎりリュック ＋ 小さな木製スプーン",
+    tone: "やさしい水彩＋鉛筆線画。観光地を一緒に歩く相棒のような温もりあるタッチ。",
+    goods: "①『びわコレ』美食ガイドホスト（銀鱗をコールドフォイル表現） · ②『しがデコ！』もぐもぐ表情シール · ③ 道の駅・飲食店アイコン",
+    colors: [["#7dd3fc", "ミントブルー"], ["#cbd5e1", "シルバーフォイル"], ["#fda4af", "サーモンピンク"], ["#f8fafc", "近江米ホワイト"]],
+    r4: ["水91.6%→美食の架け橋", "シガリズム ビワマス体験", "周遊・飲食認知"],
+    dup: "「びわトト」Web重複0件確認（米原警察署マッスル鱒原さんは交通安全筋肉キャラのため造形・役割とも完全分離）"
+  },
+  {
+    id: "biwaparu",
+    badge: "案B · Z世代・SNS向け",
+    name: "びわぱる",
+    sub: "びわ湖真珠（イケチョウガイ）× 滋賀7圏域トレジャーコレクター",
+    img: "./images/char_02_biwaparu.jpg",
+    pdf: "./おちょころ_企画レポート_JP.pdf",
+    quote: "「湖の貝から生まれたキラキラ好きの真珠妖精。『滋賀には水のほかにも輝くスイーツや工芸がこんなにたくさんあるよ！』と7圏域の宝物を貝バッグに集めて発信する。」",
+    motif: "びわ湖固有貝イケチョウガイで育つ淡海真珠 ＋ 7圏域チャーム",
+    tone: "2026『平成女児・シル活』に寄り添うぷっくり艶感のあるポップイラスト。",
+    goods: "①『しがデコ！』UV擬似エンボスシール（貝マットvs真珠高光沢） · ②『びわコレ』7圏域シリーズカード",
+    colors: [["#fef3c7", "パールクリーム"], ["#c4b5fd", "オーロラライラック"], ["#7dd3fc", "びわ湖スカイ"], ["#fb7185", "ご当地アクセント"]],
+    r4: ["Instagram拡散", "2027 DC 推し・聖地巡礼", "シガリズム真珠・ここ滋賀"],
+    dup: "「びわぱる」Web重複0件確認（近江八幡「赤コン君」との重複回避）"
+  },
+  {
+    id: "ochokoro",
+    badge: "案C · 信楽焼 × 淡色クラフト（選定案）",
+    name: "おちょころ",
+    sub: "信楽焼おちょこの付喪神から生まれた精霊 × 本体固定・名産展開",
+    img: "./images/char_03_ochokoro.jpg",
+    pdf: "./おちょころ_発表資料_JP.pdf",
+    quote: "「千年の信楽の窯から生まれ、朝宮の茶葉の鉢として心優しく生まれ変わった器の精霊。『少し傾いていても大丈夫。滋賀の美味しい時間も夜も、ゆっくり味わって』と旅人にそっと一服を差し出す。」",
+    motif: "信楽焼のおちょこ帽子（固定）＋ 朝宮茶の葉（固定）＋ 両手の名産小物（可変）",
+    tone: "20–40代の手帳やカフェ写真に馴染む、落ち着いた淡色アースカラー調。",
+    goods: "①『しがデコ！ 大人クラフトシール』(Vol.1美食 / Vol.2夜) · ②『滋賀の宝箱』紋章＆紙スタンド · ③『びわコレ』ナイトレア",
+    colors: [["#f5f5dc", "生成りクリーム"], ["#a0522d", "信楽テラコッタ"], ["#3d6b4f", "抹茶セージ"], ["#e8e2d5", "砂ベージュ"], ["#c89b3c", "箔ゴールド"]],
+    r4: ["信楽焼・朝宮茶の正統性", "日帰り92.2%→宿泊転換", "淡色クラフト感 × MLGs"],
+    dup: "「おちょころ」Web重複0件確認（信楽「ぽんぽこちゃん」、鮒ずし「ふなずきんちゃん」、大阪府警「かもすけ」と完全分離）"
+  }
+];
+
+const DUP_LIST = [
+  { name: "赤コン君（近江八幡）", desc: "赤こんにゃく＋丁稚 → 初期案から外し重複回避" },
+  { name: "かもすけ（大阪府警）", desc: "特殊詐欺対策カモ → 近畿圏連携での混同を避け除外" },
+  { name: "ますまる君（富山）/ マッスル鱒原さん", desc: "鱒寿司・警察広報筋肉鱒 → 造形と文脈を完全差別化" },
+  { name: "ひこにゃん / らんまるくん", desc: "彦根白猫＋兜 / 森蘭丸 → 権利・単一市町集中を回避" },
+  { name: "キャッフィー・チャッフィー・うぉーたん", desc: "滋賀県公式ナマズ・水妖精 → 水イメージ偏重を回避（Q5比較対象）" },
+  { name: "びわたん / びわ湖くん / びわけん", desc: "びわ湖地図シルエット型 → 湖型キャラクターを回避" },
+  { name: "野洲のおっさん / 知ったかぶりカイツブリ", desc: "県鳥カイツブリ系 → 高知名度キャラとの混同回避" },
+  { name: "近江うし丸 / 近江うしのすけ", desc: "竜王町公式近江牛キャラ → 牛モチーフ単独型を回避" },
+  { name: "てんちゃん / しがの助", desc: "近江商人博物館 / 滋賀銀行 → 商人服モチーフを回避" },
+  { name: "にんじゃえもん / ぽんぽこちゃん", desc: "甲賀忍者 / 信楽タヌキ → タヌキ定番像と差異化" },
+  { name: "おうみん / ふなずきんちゃん", desc: "守山メロン / 鮒ずし頭巾 → 食頭巾定番型を回避" }
+];
+
+const R3_PRODS = [
+  {
+    id: "biwacolle",
+    badge: "R3 案1 · 周遊・宿泊転換",
+    name: "『びわコレ』周遊トレーディングカード",
+    price: "無料（施設条件） / 300–500円（ホルダー）",
+    img: "./images/prod_01_biwacolle_cards.jpg",
+    pdf: "./R3_product_sheet_1_biwacolle.pdf",
+    summary: "ラ コリーナ（221万人）・黒壁（194万人）など大型拠点でノーマルカードを受け取り、周辺飲食や18時以降の宿泊施設で特殊加工レアカードを集める周遊型トレカです。",
+    what: "TCG規格カード（ノーマル／銀箔／ナイトレア3段階）＋ 折畳み紙製マップホルダー（裏面QR連動）",
+    who: "1拠点のみで帰路につく日帰り客（92.2%）、カード・スタンプ収集旅行者（20–40代・家族）",
+    where: "① 大型拠点（ノーマル）→ ② 周辺グルメ・歴史街区（第2スポット）→ ③ 18時以降の食事・宿泊（ナイトレア）",
+    why: "特定拠点への一極集中を和らげ、日帰り客を夜・宿泊へ誘い、水＋食の組み合わせで91.6%偏りを解消",
+    ainz: "コールドフォイル（銀箔）＋ UV擬似エンボス（水面・質感）＋ 可変ナンバリング（DPS）＋ 脱プラ紙スリーブ",
+    charMode: "カード枠や案内吹き出しに「おちょころ」が登場し次のスポットを案内。ナイトレアは「おやすみおちょころ」。",
+    nonCharMode: "マンホールカードのようにキャラクターを外し、滋賀の美食・夜景写真とタイポグラフィ中心の洗練構成へ切替可能です。"
+  },
+  {
+    id: "shigadeco",
+    badge: "R3 案2 · SNS・Z世代拡散",
+    name: "『しがデコ！』ぷっくりシール＆シール帳",
+    price: "450–650円（シール） / 980–1,400円（シール帳）",
+    img: "./images/prod_02_shigadeco_stickers.jpg",
+    pdf: "./R3_product_sheet_2_shigadeco.pdf",
+    summary: "2026『平成女児・シル活』に合わせ、サラダパン・近江牛・近江茶など滋賀7圏域の名物を立体UVニスと箔押しシールで仕上げ、手帳やスマホ装飾から自然な投稿を促します。",
+    what: "滋賀7圏域別型抜き特殊質感シールシート ＋ 地域グルメマップ入り手のひらサイズ紙製ミニシール帳",
+    who: "Instagram・TikTokで旅先を探す10–30代女性、Z世代、関西圏大学生・カップル",
+    where: "県内7圏域の道の駅・JR駅・案内所 ＋ 東京『ここ滋賀（COCOトライ）』スターターセット試験販売",
+    why: "ハッシュタグ（#しがデコ）による自発的な口コミ拡散と、持ち物を通じた滋賀名産の継続想起",
+    ainz: "厚盛りUV擬似エンボス（凹凸・艶マット対比）＋ コールドフォイル ＋ ハーフカットトムソン ＋ 脱プラ紙バインダー",
+    charMode: "「おちょころ」が各地の名物・名所を掲げる拡張ポーズでシート全体の統一感をつくります。",
+    nonCharMode: "キャラクターを省き、サラダパン・近江茶・彦根城・白鬚鳥居のレトロポップなアイコン文具として展開可能です。"
+  },
+  {
+    id: "treasurebox",
+    badge: "R3 案3 · 高付加価値・MLGs",
+    name: "『ひらいて旅する 滋賀の宝箱』",
+    price: "1,500–2,400円（既存銘菓・茶セット）",
+    img: "./images/prod_03_shiga_treasure_box.jpg",
+    pdf: "./R3_product_sheet_3_treasurebox.pdf",
+    summary: "アインズ様の強みであるパッケージ印刷で既存の地域菓子・近江茶を格上げ。箱を開くと内側地図と脱プラ仕様の『組み立て式ペーパースタンド』が立ち上がります。",
+    what: "展開型リユース紙BOX（内面マップ＋QR）＋ 組み立て式脱プラ紙スタンド ＋ 既存地域菓子・近江茶",
+    who: "宿泊客・贈答層、『ジャケ買い』女性客、軽やかな日本土産を求める訪日外国人（延べ60.9万人規模）",
+    where: "東京『ここ滋賀』（客単価1,546円→2,000円超へ向上）、県内ホテル売店・駅・観光施設",
+    why: "地域資源の高付加価値化＋贈り先での二次認知＋アクリルスタンドの環境配慮型紙代替（MLGs）",
+    ainz: "水なし印刷 ＋ びわ湖環境ペーパー ＋ 脱プラ印刷（UVニス）＋ 精密トムソン構造 ＋ コールドフォイル",
+    charMode: "「おちょころ」が外箱紋章と、内側から切り離して立てられるペーパースタンドの主役を担います。",
+    nonCharMode: "近江商人の暖簾・びわ湖等高線・信楽焼陶肌の幾何学模様によるモダン和クラフト箱＋名建築紙スタンドへ転換できます。"
+  }
+];
+
+const SIM_CHARS = [
+  { id: "biwatoto", name: "びわトト", desc: "ビワマス × 近江米", img: "./images/char_01_biwatoto.jpg" },
+  { id: "biwaparu", name: "びわぱる", desc: "びわ湖真珠 × 7圏域", img: "./images/char_02_biwaparu.jpg" },
+  { id: "ochokoro", name: "おちょころ", desc: "おちょこ × 朝宮茶 × 夜", img: "./images/char_03_ochokoro.jpg" },
+  { id: "nonchar", name: "ノンキャラ図案", desc: "写真・工芸模様・タイポ", img: "./images/prod_01_biwacolle_cards.jpg" }
+];
+
+const SIM_PRODS = [
+  { id: "biwacolle", name: "『びわコレ』トレカ", desc: "周遊・宿泊誘導カード", img: "./images/prod_01_biwacolle_cards.jpg" },
+  { id: "shigadeco", name: "『しがデコ！』シール&帳", desc: "Z世代シル活デコシール", img: "./images/prod_02_shigadeco_stickers.jpg" },
+  { id: "treasurebox", name: "『滋賀の宝箱』ギフト箱", desc: "地図入り銘菓箱+紙スタンド", img: "./images/prod_03_shiga_treasure_box.jpg" }
+];
+
+const SIM_MATRIX = {
+  "biwatoto+biwacolle": {
+    fit: "有力組み合わせ", badge: "badge-top",
+    target: "ラ コリーナ・黒壁来訪ファミリー／カップル",
+    process: "銀鱗コールドフォイル ＋ 波紋UV擬似エンボス ＋ 可変番号",
+    dc: "推し・聖地巡礼 ＋ 歴史・文化",
+    pitch: "「水（91.6%）から滋賀グルメへ目を向けさせる案内役。拠点ごとに違う料理を楽しむカードで2軒目移動を促します。」"
+  },
+  "biwatoto+shigadeco": {
+    fit: "好適性（グルメシール）", badge: "badge-inhouse",
+    target: "ファミリー層、ご当地グルメ文具ファン",
+    process: "厚盛りUV擬似エンボス（おにぎり・魚質感）＋ ハーフカット",
+    dc: "推し・聖地巡礼 ＋ ヘルス＆ウェルネス",
+    pitch: "「サラダパン・近江牛・ビワマスを頬張る6表情シールで、旅の食記憶を持ち物に残します。」"
+  },
+  "biwatoto+treasurebox": {
+    fit: "適性（家族土産・道の駅向け）", badge: "badge-indigo",
+    target: "家族旅行の帰宅土産、ご当地食ファン",
+    process: "水なし印刷 ＋ トムソン展開箱 ＋ ペーパースタンド",
+    dc: "歴史・文化・伝統",
+    pitch: "「箱を開くとおすすめの美食マップが広がり、食卓に飾れる紙スタンドで郷土料理を記憶します。」"
+  },
+  "biwaparu+biwacolle": {
+    fit: "好適性（7圏域コンプリート）", badge: "badge-inhouse",
+    target: "10–30代女性、カード収集派",
+    process: "オーロラ調コールドフォイル ＋ 7圏域カラー展開",
+    dc: "推し・聖地巡礼",
+    pitch: "「圏域ごとに貝バッグの中身が変わり、7圏域コンプリート意欲を高めます。」"
+  },
+  "biwaparu+shigadeco": {
+    fit: "高相乗（Z世代拡散）", badge: "badge-top",
+    target: "Z世代、Instagram・シル活層、首都圏テスト販売",
+    process: "厚盛りUVニス（貝マットvs真珠高艶）＋ コールドフォイル",
+    dc: "推し・聖地巡礼",
+    pitch: "「2026年シールブームとアインズ様のUV擬似エンボスが直接噛み合う、手帳・スマホ装飾向け仕様です。」"
+  },
+  "biwaparu+treasurebox": {
+    fit: "適性（女性向けジャケ買い菓子箱）", badge: "badge-indigo",
+    target: "20–30代女性ギフト、ここ滋賀1F来訪者",
+    process: "淡色印刷 ＋ 金銀箔差し色 ＋ 貝型蓋トムソン",
+    dc: "推し・聖地巡礼",
+    pitch: "「食べ終わった後に小物入れとして再利用しやすい意匠で、ここ滋賀の女性客単価向上を狙います。」"
+  },
+  "ochokoro+biwacolle": {
+    fit: "中核戦略（ナイト・宿泊特化）", badge: "badge-gold",
+    target: "20–50代カップル・食通・宿泊潜在層（日帰り92.2%突破）",
+    process: "濃紺地×金箔コールドフォイル ＋ びわ湖環境ペーパー",
+    dc: "ナイトコンテンツ × ヘルス＆ウェルネス",
+    pitch: "「昼はノーマルカードで巡り、18時以降の夕食・温泉・宿泊時に解禁される金箔ナイトカードで滞在時間を延ばします。」"
+  },
+  "ochokoro+shigadeco": {
+    fit: "最終選定・詳細試作済み", badge: "badge-top",
+    prodImg: "./images/ochokoro_04_sticker_sheet_B_night_mockup.jpg",
+    target: "20–40代手帳・カフェ巡り層、淡色トーン愛好家、宿泊旅層",
+    process: "A6和紙風粘着紙 ＋ 部分UV擬似エンボス ＋ 金箔コールドフォイル ＋ びわ湖環境ペーパー台紙",
+    dc: "ヘルス＆ウェルネス × ナイトコンテンツ × 推し・聖地巡礼",
+    pitch: "「信楽焼の精霊『おちょころ』の基本形を守りつつ滋賀8名物を添えた大人クラフトシール。手帳装飾と宿泊誘導を同時に満たします。」"
+  },
+  "ochokoro+treasurebox": {
+    fit: "最高相乗（アインズ本業・高付加価値筆頭）", badge: "badge-top",
+    target: "宿泊客、ここ滋賀ギフト層、インバウンド層",
+    process: "水なし印刷 ＋ びわ湖環境ペーパー ＋ 脱プラ(1/15) ＋ 精密トムソン ＋ 金箔",
+    dc: "ナイトコンテンツ × ヘルス＆ウェルネス × MLGs",
+    pitch: "「アインズ様の環境印刷・高級化粧箱技術を最も美しく体現する組み合わせ。近江茶・地酒肴・銘菓の客単価を2,000円超へ押し上げます。」"
+  },
+  "nonchar+biwacolle": {
+    fit: "好適性（行政・伝統志向の安定案）", badge: "badge-indigo",
+    target: "マンホールカード・城郭ファン、観光協会公式展開",
+    process: "高精細写真印刷 ＋ コールドフォイル地名ロゴ ＋ DPS番号",
+    dc: "歴史・文化・伝統",
+    pitch: "「新規キャラ権利管理の負担を抑えつつ、グラフィックチームとも連動しやすい王道カード構成です。」"
+  },
+  "nonchar+shigadeco": {
+    fit: "適性（モダンレトロ・ローカルアイコン）", badge: "badge-inhouse",
+    target: "Z世代文具ファン、スーツケース・PC貼付需要、外国人",
+    process: "レトロタイポ ＋ UV擬似エンボス艶対比 ＋ 型抜き",
+    dc: "推し・聖地巡礼",
+    pitch: "「郷土料理や名建築を端正なピクトグラムと箔押しで仕上げ、文具ファンに選ばれるローカルシールとして展開します。」"
+  },
+  "nonchar+treasurebox": {
+    fit: "有力（商用化の最短ルート）", badge: "badge-gold",
+    target: "百貨店催事・ここ滋賀・ホテルギフト、インバウンド",
+    process: "伝統紋様金箔 ＋ びわ湖環境ペーパー ＋ 名建築紙スタンド",
+    dc: "歴史・文化・伝統 × MLGs",
+    pitch: "「既存和菓子メーカーや茶舗が自社商品を最も違和感なく託せる正統派クラフト箱。12/18試作の現実性が極めて高い案です。」"
+  }
+};
+
+const OCHO_TABS = [
+  { img: "./images/ochokoro_01_turnaround_expressions.jpg", cap: "正面・3/4・側面・背面ターンアラウンド＋表情6種（信楽おちょこ帽と近江茶葉を固定）" },
+  { img: "./images/ochokoro_02_shiga_7areas_props.jpg", cap: "本体固定 × 滋賀名物モジュール拡張8種（両手小物の差し替えでシリーズ展開）" },
+  { img: "./images/ochokoro_03_sticker_sheet_A_gourmet.jpg", cap: "シール案 Vol.1 — 滋賀グルメ・茶・発酵 和紙風シール（部分UVニス＋金箔差し色）" },
+  { img: "./images/ochokoro_04_sticker_sheet_B_night_mockup.jpg", cap: "シール案 Vol.2 — ナイト・旅シール＆ミニシール帳・タンブラー・布張り手帳使用例" }
+];
+const OCHO_PROPS = [
+  { cat: "food", title: "1. 近江茶の茶碗＆茶筅", area: "甲賀（土山）・東近江", copy: "「ゆっくり淹れた近江茶ひと口で、旅のリズムを整えるころ」", spec: "茶面艶出しUV" },
+  { cat: "food", title: "2. あつあつ近江牛すき重", area: "近江八幡・竜王町・彦根", copy: "「湯気までごちそう、この温もりも持ち帰るころ」", spec: "器縁ゴールド箔" },
+  { cat: "food", title: "3. サラダパン（コッペパン）", area: "長浜（木之本）・ここ滋賀上位", copy: "「外はふんわり中は爽やか、思わず笑顔になるころ」", spec: "マット×艶対比" },
+  { cat: "food", title: "4. 信楽焼とっくり（地酒）", area: "県内30余蔵元・ここ滋賀バー", copy: "「滋賀の夜は一献とともにゆっくり更けていくころ」", spec: "釉薬部分グロス" },
+  { cat: "spot", title: "5. 木舟＆湖中大鳥居", area: "高島（白鬚）・大津", copy: "「穏やかなびわ湖の波間に心もほどけるころ」", spec: "波紋金銀箔" },
+  { cat: "spot", title: "6. 石垣城郭＆桜ひょっこり", area: "彦根城・安土城・長浜城", copy: "「古い石垣の陰から春風と顔を出すころ」", spec: "桜パール調UV" },
+  { cat: "spot", title: "7. 青いガラス風鈴", area: "長浜（黒壁ガラス工芸）", copy: "「澄んだ音色が響くたび、滋賀を思い出すころ」", spec: "高光沢クリアUV" },
+  { cat: "spot", title: "8. 木桶の湯＆三日月", area: "大津（おごと温泉）・宿泊連携", copy: "「今日は急がず、温かいお湯でゆっくり休むころ」", spec: "三日月ゴールド箔" }
+];
+
+const R6_DATA = [
+  {
+    q: "Q1. アインズ様の自社工場で無理なく製造できるグッズ形態は？", cat: "tech",
+    jp: "今回の『観光×プロダクトパビリオン』において、アインズ様の自社工場で無理なく製造できるグッズの形態にはどのようなものがありますか？（カード、特殊加工シール、トムソン箱、紙製スタンドなど。アクリルや缶バッジ等の非紙素材は協力会社様での対応になりますか？）",
+    intent: "R1で抽出したTOP 3（シール・トレカ・リユース箱）が本社工場内で完結できるかを確認し、外注リスクを抑えます。",
+    branch: "自社内製優先であれば主力2品（トレカ・ギフト箱）＋シールに即集約し、協力会社併用が可能なら異素材部品＋紙台紙の併売も検討します。"
+  },
+  {
+    q: "Q2. 最小ロット・概算製造単価・製作期間はどのくらいか？", cat: "tech",
+    jp: "実際に観光協会や『ここ滋賀』、イベント等でテスト導入を想定する場合、最小ロット（100個〜500個・1,000個単位など）、おおよその製造単価感、デザイン入稿から納品までの製作期間はどのくらいでしょうか？",
+    intent: "12/18最終発表で現実的な数量と無理のない販売価格帯（400円台シール vs 1,800円箱）を見積もるための質問です。",
+    branch: "初期ロットが大きめ（1,000個+）なら滋賀全域の共通仕様へ、小ロットデジタル印刷が可能なら7圏域限定シリーズへ振り分けます。"
+  },
+  {
+    q: "Q3. 12/18最終発表に向けて試作品（サンプル）制作まで目指すべきか？", cat: "tech",
+    jp: "12月18日（DAY4）の最終発表に向けて、デザイン案（データ・プレゼン資料）の提出だけでなく、紙や加工を用いた試作品・プロトタイプ（サンプル）の制作まで目指すべきでしょうか？可能なスケジュール感も伺いたいです。",
+    intent: "DAY3（12/11）とDAY4（12/18）までの3週間におけるゴールをデータ完成にするか実物試作まで広げるか確定します。",
+    branch: "試作制作が可能ならDAY3前に1種を仕上げて実物撮影を行い、データ提案中心であれば展開図・仕様書・モックアップ精度を突き詰めます。"
+  },
+  {
+    q: "Q4. 販売・配布先の想定はどこまで具体化すべきか？（観光施設・駅・ここ滋賀など）", cat: "biz",
+    jp: "企画の中で、具体的な販売先や配布場所（観光施設、道の駅、JR駅、オンライン、または貴社が運営されている東京の『ここ滋賀』のCOCOトライ等）まで明確に想定して提案すべきでしょうか？",
+    intent: "グッズ単体の提案に留まらず、実際の来訪・消費導線（県内拠点 vs 東京ここ滋賀）をどこまで設計に落とし込むか定めます。",
+    branch: "ここ滋賀連携が有望なら1F客単価1,546円の底上げモデルを前面に出し、県内拠点中心ならラ コリーナや彦根等の現地配布へ焦点を絞ります。"
+  },
+  {
+    q: "Q5. キャラクター起用時の権利範囲と県公式キャラクター活用との比較は？", cat: "biz",
+    jp: "グッズにキャラクターを活用する場合、①新規オリジナルキャラクター（本日お持ちした「おちょころ」）を提案するのと、②既存の滋賀県公式キャラクター（キャッフィーやうぉーたん等）を活用するのとでは、権利範囲や狙いとしてどちらが望ましいでしょうか？キャラ無しのグラフィック案もあり得ますか？",
+    intent: "「おちょころ」を軸に磨き上げるか、既存公式キャラ・ノンキャラ図案へ舵を切るかを判断する最重要の分岐質問です。",
+    branch: "オリジナル採用可ならデザイナー様と「おちょころ」を洗練し、ノンキャラ・公式推奨ならR3の『ノンキャラ転換設計』へ即移行します。"
+  },
+  {
+    q: "Q6. 環境配慮仕様（MLGs・脱プラ・水なし印刷）はどの程度重視すべきか？", cat: "biz",
+    jp: "滋賀県やアインズ様が推進されているMLGs（Mother Lake Goals）や、貴社の『水なし印刷』『脱プラ印刷』『びわ湖環境ペーパー』といった環境配慮仕様は、今回のグッズ企画における重要な評価ポイントとして組み込むべきでしょうか？",
+    intent: "アインズ様の脱プラ（1/15）・水なし印刷・環境ペーパーを企画の中核訴求点（脱プラ紙スタンド等）として全面採用するか確認します。",
+    branch: "重要評価軸であれば『滋賀の宝箱』の組み立て式紙スタンドと『びわコレ』の紙スリーブを企画書の主軸に据えます。"
+  },
+  {
+    q: "Q7. SNS・グラフィックパビリオン他チームとの連動有無は？", cat: "biz",
+    jp: "他の『SNSパビリオン』『グラフィックパビリオン』チームとは、同じ世界観・キャラクター・ロゴ等を共有して連動させる想定でしょうか、それとも各チーム独立した企画として進める形でしょうか？",
+    intent: "3パビリオン全体で世界観を統一するか、チーム単独完結型でQR・ハッシュタグ導線を組むかを確認します。",
+    branch: "全体連携方針なら他チームとトーン＆マナーの共有日程を組み、独立進行なら本チーム内でQR誘導とSNS設計まで完結させます。"
+  },
+  {
+    q: "Q8.【工場深掘り】コールドフォイル・UV擬似エンボスの単価感と小ロット適性は？", cat: "bonus",
+    jp: "貴社の強みであるコールドフォイル（箔表現）やUV擬似エンボス加工（立体・質感表現）を取り入れた場合、通常のオフセット印刷と比べて単価やリードタイムはどの程度変わりますか？シールのぷっくり表現などにも応用できますか？",
+    intent: "『びわコレ』ナイトレアや『しがデコ！』の差別化要素である特殊加工のコスト現実性を現場目線で検証します。",
+    branch: "小ロットでも実装しやすい加工範囲を見極め、必要に応じて箔1色や型押し等へコスト調整した実務案へ落とし込みます。"
+  },
+  {
+    q: "Q9.【工場深掘り】既存銘菓・近江茶向けの共通スリーブ／リユース箱の制約は？", cat: "bonus",
+    jp: "お菓子や近江茶などの既存の名産品に後から組み合わせられるような、共通規格のギフト箱やリユース可能なスリーブパッケージを作る場合、デザインや構造面で気をつけるべき制約（食品衛生法や外装サイズ等）はありますか？",
+    intent: "『滋賀の宝箱』を新規食品開発ゼロのまま既存事業者商品へ帯掛け・同梱で実現するための法規・構造制約を確認します。",
+    branch: "個包装済み商品を収める外装スリーブ／外箱方式が食品表示上もっとも実用的かをデザイナー様へ確認します。"
+  },
+  {
+    q: "Q10.【日程深掘り】DAY3（12/11）のアンケート・市場データ分析に向けた準備は？", cat: "bonus",
+    jp: "次回のDAY3（12月11日）に向けて、今回私たちが検討した企画案に対するターゲット層のアンケートや市場調査データなど、アインズ様や県から追加で共有いただけるデータ、あるいは学生側で実施した方がよいアンケート項目はありますか？",
+    intent: "DAY3に向けた追加調査の役割分担と、学生側で回すべき価格・購買意欲アンケートの設問設計を把握します。",
+    branch: "共有データの有無に応じ、主力2品＋シールの価格受容性（400円台 vs 1,800円帯）を測る簡易アンケートを準備します。"
+  }
+];
+
+const CHECKLIST_ITEMS = [
+  "TeamsチャンネルでJR野洲駅の集合出口・服装等の追加連絡を確認",
+  "BKC 13:20–13:30出発（またはJR琵琶湖線時刻表）を再確認 — 14:30野洲駅集合",
+  "ノートPCのバッテリー100%充電 ＆ 充電器を持参",
+  "day2_visuals PDFファイル（1枚要約・シンプル10枚デッキ・最終シート・グッズ画像）のオフライン閲覧確認",
+  "A4 1枚要約（R5_designer_review_1pager_JP.pdf）2〜3部カラー印刷（推奨）",
+  "チームグループへ課題提示方法・説明順序の確認メッセージ送信",
+  "筆記用具・メモ帳・交通系ICカード（ICOCA等）の残高確認"
+];
+
+const TEAM_MSG_JP = `お疲れ様です！明日のアインズ本社見学（14:30野洲駅集合）に向けて、私は「流行グッズ調査（印刷・パッケージ適性TOP3）」「オリジナルキャラクター案（おちょころ）」「グッズ企画案」と、デザイナーさん向けの1枚要約・質問リストを日本語で準備しています。
+念のため3点だけ確認させてください！
+① 宿題は明日の現地でPC・資料を見せればOKですか？（Teamsへの事前提出は必要ですか？）
+② 他のメンバーの担当（調査・キャラ・アイデアなど）と合わせて発表順など決めていますか？
+③ DAY1以降、Teamsで集合場所（野洲駅の出口など）や持ち物の追加連絡はありましたか？`;
+
+const STORAGE_KEY = "ainz_day2_checklist_v1";
+
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => el.classList.remove("show"), 2100);
+}
+
+function copyText(text, label) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast(`${label}をコピーしました`)).catch(() => fallbackCopy(text, label));
+  } else {
+    fallbackCopy(text, label);
+  }
+}
+function fallbackCopy(text, label) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+  showToast(`${label}をコピーしました`);
+}
+
+function openLightbox(src, cap) {
+  document.getElementById("lightbox-img").src = src;
+  document.getElementById("lightbox-img").alt = cap;
+  document.getElementById("lightbox-cap").textContent = cap;
+  document.getElementById("lightbox").classList.add("open");
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+}
+
+// 1. R4 Evidence
+function renderR4(idx) {
+  document.querySelectorAll(".r4-btn").forEach((b, i) => b.classList.toggle("active", i === idx));
+  const d = R4_DATA[idx];
+  document.getElementById("r4-detail").innerHTML = `
+    <div>
+      <h3>${d.title}</h3>
+      <p>${d.body}</p>
+    </div>
+    <a class="btn btn-sm" href="${d.href}">${d.linkText}</a>
+  `;
+}
+document.querySelectorAll(".r4-btn").forEach(btn => {
+  btn.addEventListener("click", () => renderR4(Number(btn.dataset.r4)));
+});
+renderR4(0);
+
+// 2. R1 Table
+let r1Filter = "all";
+let r1Expanded = new Set([1]);
+function renderR1() {
+  const rows = R1_ITEMS.filter(item => {
+    if (r1Filter === "top3") return item.isTop;
+    if (r1Filter === "inhouse") return item.cat === "inhouse";
+    if (r1Filter === "outsource") return item.cat === "outsource";
+    return true;
+  });
+  const tbody = document.getElementById("r1-tbody");
+  tbody.innerHTML = rows.map(item => {
+    const isOpen = r1Expanded.has(item.id);
+    const badgeCls = item.isTop ? "badge-top" : (item.cat === "inhouse" ? "badge-inhouse" : "badge-out");
+    const linksHtml = item.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener" style="margin-right:12px;">${l.label} ↗</a>`).join("");
+    return `
+      <tr class="r1-row ${item.isTop ? "is-top" : ""}" data-id="${item.id}">
+        <td><span class="badge ${badgeCls}">${item.rank}</span></td>
+        <td><strong>${item.name}</strong><div style="font-size:12px; color:var(--ink-subtle); margin-top:2px;">${item.shape}</div></td>
+        <td class="num" style="font-size:13px;">${item.price}</td>
+        <td style="font-size:13.2px; color:var(--ink-muted);">${item.why}</td>
+        <td><strong style="font-size:13px; color:${item.isTop ? "var(--vermilion)" : "var(--indigo)"};">${item.fit}</strong><div style="font-size:12px; color:var(--ink-subtle); margin-top:2px;">${isOpen ? "閉じる ▲" : "詳細を見る ▼"}</div></td>
+      </tr>
+      ${isOpen ? `
+      <tr class="r1-expand">
+        <td colspan="5">
+          <div class="r1-expand-grid">
+            <div>
+              <strong>滋賀への適用例：</strong> ${item.shiga}<br>
+              <div style="margin-top:6px;"><strong>根拠リンク（HTTP 200 確認済）：</strong> ${linksHtml}</div>
+            </div>
+            <div>
+              <strong>アインズ工程・代替ポイント：</strong> ${item.tech}
+            </div>
+          </div>
+        </td>
+      </tr>` : ""}
+    `;
+  }).join("");
+
+  tbody.querySelectorAll(".r1-row").forEach(tr => {
+    tr.addEventListener("click", () => {
+      const id = Number(tr.dataset.id);
+      if (r1Expanded.has(id)) r1Expanded.delete(id); else r1Expanded.add(id);
+      renderR1();
+    });
+  });
+}
+document.getElementById("r1-filters").addEventListener("click", e => {
+  const btn = e.target.closest(".seg-btn");
+  if (!btn) return;
+  r1Filter = btn.dataset.filter;
+  document.querySelectorAll("#r1-filters .seg-btn").forEach(b => b.classList.toggle("active", b === btn));
+  renderR1();
+});
+renderR1();
+
+// 3. R2 Characters
+let activeCharIdx = 0;
+function renderR2Detail() {
+  const c = R2_CHARS[activeCharIdx];
+  const swHtml = c.colors.map(([hex, lbl]) => `
+    <button class="swatch-btn" type="button" data-hex="${hex}" title="クリックでHEXコピー">
+      <span class="swatch-dot" style="background:${hex};"></span>${lbl} (${hex})
+    </button>
+  `).join("");
+  const r4Html = c.r4.map(t => `<span class="badge badge-indigo">${t}</span>`).join(" ");
+  const panel = document.getElementById("r2-panel");
+  panel.innerHTML = `
+    <div class="img-frame" data-zoom-src="${c.img}" data-zoom-cap="${c.name} — ${c.sub}">
+      <img src="${c.img}" alt="${c.name} キャラクターシート">
+      <span class="zoom-pill">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        拡大表示
+      </span>
+    </div>
+    <div class="detail-stack">
+      <div class="detail-head">
+        <div>
+          <span class="badge badge-indigo">${c.badge}</span>
+          <h3 class="jp" style="margin-top:6px;">${c.name}</h3>
+          <div class="detail-sub">${c.sub}</div>
+        </div>
+        <a class="btn btn-sm" href="${c.pdf}" target="_blank" rel="noopener">A4 シートPDF ↗</a>
+      </div>
+      <div class="quote-block">${c.quote}</div>
+      <div class="kv-grid">
+        <div class="kv-k">モチーフ</div><div class="kv-v">${c.motif}</div>
+        <div class="kv-k">画風・トーン</div><div class="kv-v">${c.tone}</div>
+        <div class="kv-k">展開グッズ</div><div class="kv-v">${c.goods}</div>
+        <div class="kv-k">配色パレット</div><div class="kv-v"><div class="swatch-row">${swHtml}</div></div>
+        <div class="kv-k">R4根拠</div><div class="kv-v">${r4Html}</div>
+        <div class="kv-k">重複確認</div><div class="kv-v" style="color:var(--teal); font-weight:600;">${c.dup}</div>
+      </div>
+    </div>
+  `;
+  panel.querySelectorAll(".swatch-btn").forEach(sb => {
+    sb.addEventListener("click", () => copyText(sb.dataset.hex, `カラーコード ${sb.dataset.hex}`));
+  });
+  panel.querySelector(".img-frame").addEventListener("click", el => {
+    const f = el.currentTarget;
+    openLightbox(f.dataset.zoomSrc, f.dataset.zoomCap);
+  });
+}
+
+function renderR2Compare() {
+  const wrap = document.getElementById("r2-compare-wrap");
+  wrap.innerHTML = R2_CHARS.map(c => `
+    <article class="compare-item">
+      <div class="img-frame" data-zoom-src="${c.img}" data-zoom-cap="${c.name}">
+        <img src="${c.img}" alt="${c.name}">
+        <span class="zoom-pill">拡大</span>
+      </div>
+      <div>
+        <span class="badge badge-indigo">${c.badge}</span>
+        <h3 class="jp" style="margin-top:6px;">${c.name}</h3>
+        <div class="sub">${c.sub}</div>
+      </div>
+      <p>${c.quote}</p>
+      <div class="divider-list">
+        <div><strong>主力グッズ：</strong> ${c.goods}</div>
+        <div><strong>重複確認：</strong> ${c.dup}</div>
+      </div>
+      <a class="btn btn-sm" href="${c.pdf}" target="_blank" rel="noopener" style="margin-top:auto; align-self:flex-start;">A4 PDFを開く ↗</a>
+    </article>
+  `).join("");
+  wrap.querySelectorAll(".img-frame").forEach(f => {
+    f.addEventListener("click", () => openLightbox(f.dataset.zoomSrc, f.dataset.zoomCap));
+  });
+}
+
+document.getElementById("r2-tabs").addEventListener("click", e => {
+  const btn = e.target.closest(".seg-btn");
+  if (!btn) return;
+  activeCharIdx = Number(btn.dataset.char);
+  document.querySelectorAll("#r2-tabs .seg-btn").forEach(b => b.classList.toggle("active", b === btn));
+  renderR2Detail();
+});
+document.getElementById("r2-mode-detail").addEventListener("click", () => {
+  document.getElementById("r2-mode-detail").classList.add("active");
+  document.getElementById("r2-mode-compare").classList.remove("active");
+  document.getElementById("r2-detail-wrap").style.display = "block";
+  document.getElementById("r2-compare-wrap").style.display = "none";
+});
+document.getElementById("r2-mode-compare").addEventListener("click", () => {
+  document.getElementById("r2-mode-compare").classList.add("active");
+  document.getElementById("r2-mode-detail").classList.remove("active");
+  document.getElementById("r2-detail-wrap").style.display = "none";
+  document.getElementById("r2-compare-wrap").style.display = "grid";
+  renderR2Compare();
+});
+renderR2Detail();
+
+function renderDupList(query = "") {
+  const q = query.trim().toLowerCase();
+  const filtered = DUP_LIST.filter(d => !q || d.name.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q));
+  const el = document.getElementById("dup-list");
+  if (!filtered.length) {
+    el.innerHTML = `<div style="color:var(--ink-subtle); font-size:13.5px;">「${query}」に一致する既存キャラクターはありません（重複リスク低）。</div>`;
+    return;
+  }
+  el.innerHTML = filtered.map(d => `<div class="dup-chip"><strong>${d.name}</strong><span>${d.desc}</span></div>`).join("");
+}
+document.getElementById("dup-search").addEventListener("input", e => renderDupList(e.target.value));
+renderDupList();
+
+// 4. R3 Products with Char/Non-Char Live Toggle
+const prodModes = { biwacolle: "char", shigadeco: "char", treasurebox: "char" };
+function renderR3() {
+  const grid = document.getElementById("r3-grid");
+  grid.innerHTML = R3_PRODS.map(p => {
+    const mode = prodModes[p.id];
+    return `
+      <article class="prod-card">
+        <div class="img-frame" data-zoom-src="${p.img}" data-zoom-cap="${p.name}">
+          <img src="${p.img}" alt="${p.name} モックアップ">
+          <span class="zoom-pill">拡大</span>
+        </div>
+        <div>
+          <span class="badge badge-top">${p.badge}</span>
+          <h3 style="margin-top:6px;">${p.name}</h3>
+          <div class="num" style="font-size:13px; color:var(--teal); font-weight:700;">想定価格帯：${p.price}</div>
+        </div>
+        <p class="prod-summary">${p.summary}</p>
+        <div class="mode-switch" data-prod="${p.id}">
+          <button type="button" class="${mode === "char" ? "active" : ""}" data-m="char">キャラクター案</button>
+          <button type="button" class="${mode === "nonchar" ? "active" : ""}" data-m="nonchar">ノンキャラ図案</button>
+        </div>
+        <div class="mode-note">${mode === "char" ? p.charMode : p.nonCharMode}</div>
+        <dl class="four-el">
+          <dt>何を</dt><dd>${p.what}</dd>
+          <dt>誰に</dt><dd>${p.who}</dd>
+          <dt>どこで</dt><dd>${p.where}</dd>
+          <dt>解決課題</dt><dd>${p.why}</dd>
+        </dl>
+        <div style="font-size:12.5px; color:var(--ink-subtle); border-top:1px solid var(--line); padding-top:8px;">
+          <strong style="color:var(--indigo);">アインズ工程：</strong> ${p.ainz}
+        </div>
+        <a class="btn btn-sm" href="${p.pdf}" target="_blank" rel="noopener" style="margin-top:auto; align-self:flex-start;">A4 企画シートPDF ↗</a>
+      </article>
+    `;
+  }).join("");
+
+  grid.querySelectorAll(".mode-switch button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const pid = btn.closest(".mode-switch").dataset.prod;
+      prodModes[pid] = btn.dataset.m;
+      renderR3();
+    });
+  });
+  grid.querySelectorAll(".img-frame").forEach(f => {
+    f.addEventListener("click", () => openLightbox(f.dataset.zoomSrc, f.dataset.zoomCap));
+  });
+}
+renderR3();
+
+// 4b. Ochokoro Branding Studio Logic
+let activeOchoTab = 0;
+let activeOchoPropCat = "all";
+
+function renderOchoStudioVisual() {
+  const slot = document.getElementById("ocho-visual-slot");
+  if (activeOchoTab < 4) {
+    const t = OCHO_TABS[activeOchoTab];
+    slot.innerHTML = `
+      <div class="img-frame" id="ocho-zoom-frame" data-zoom-src="${t.img}" data-zoom-cap="${t.cap}">
+        <img src="${t.img}" alt="${t.cap}">
+        <span class="zoom-pill">拡大表示</span>
+      </div>
+      <div style="font-size:13px; color:var(--ink-muted); margin-top:8px; font-weight:600;">${t.cap}</div>
+    `;
+    document.getElementById("ocho-zoom-frame").addEventListener("click", e => {
+      openLightbox(e.currentTarget.dataset.zoomSrc, e.currentTarget.dataset.zoomCap);
+    });
+  } else {
+    slot.innerHTML = `
+      <div class="insta-grid-3x3" aria-label="おちょころ Instagram 3x3 淡色フィード例">
+        <div class="insta-tile" style="background:#a0522d; color:#f5f5dc;">
+          <strong style="font-size:13px;">信楽焼の窯から</strong>
+          <span style="font-size:11px; opacity:0.9; margin-top:4px;">千年陶芸の器オリジン</span>
+        </div>
+        <div class="insta-tile"><img src="./images/char_03_ochokoro.jpg" alt="おちょころ基本形"></div>
+        <div class="insta-tile" style="background:#f5f5dc; color:#4a3525;">
+          <strong class="jp" style="font-size:13px;">#おちょころ</strong>
+          <span style="font-size:11px; margin-top:4px;">淡色クラフト世界観</span>
+        </div>
+        <div class="insta-tile"><img src="./images/ochokoro_03_sticker_sheet_A_gourmet.jpg" alt="グルメシール"></div>
+        <div class="insta-tile" style="background:#3d6b4f; color:#f5f5dc;">
+          <strong style="font-size:13px;">近江茶と器</strong>
+          <span style="font-size:11px; opacity:0.92; margin-top:4px;">ひと息つくリズムころ</span>
+        </div>
+        <div class="insta-tile"><img src="./images/ochokoro_02_shiga_7areas_props.jpg" alt="名物8種"></div>
+        <div class="insta-tile" style="background:#e8e2d5; color:#13202e;">
+          <strong style="font-size:12.5px;">淡色5色パレット</strong>
+          <span style="font-size:11px; margin-top:4px;">#F5F5DC · #A0522D · #3D6B4F</span>
+        </div>
+        <div class="insta-tile"><img src="./images/ochokoro_04_sticker_sheet_B_night_mockup.jpg" alt="タンブラーモックアップ"></div>
+        <div class="insta-tile" style="background:#c89b3c; color:#ffffff;">
+          <strong style="font-size:13px;">滋賀の夜も、器の中に</strong>
+          <span style="font-size:11px; opacity:0.95; margin-top:4px;">ナイト・宿泊転換</span>
+        </div>
+      </div>
+      <div style="font-size:13px; color:var(--ink-muted); margin-top:8px; font-weight:600;">淡色3×3フィード運用例 — 土・茶・湖・実物写真を調和させ #滋賀でひと息 を発信</div>
+    `;
+  }
+}
+
+function renderOchoProps() {
+  const list = OCHO_PROPS.filter(p => activeOchoPropCat === "all" || p.cat === activeOchoPropCat);
+  document.getElementById("ocho-prop-grid").innerHTML = list.map(p => `
+    <div class="prop-item">
+      <strong>${p.title}</strong>
+      <div class="area">${p.area} · ${p.spec}</div>
+      <div class="copy">${p.copy}</div>
+    </div>
+  `).join("");
+}
+
+document.getElementById("ocho-tabs").addEventListener("click", e => {
+  const btn = e.target.closest(".seg-btn");
+  if (!btn) return;
+  activeOchoTab = Number(btn.dataset.otab);
+  document.querySelectorAll("#ocho-tabs .seg-btn").forEach(b => b.classList.toggle("active", b === btn));
+  renderOchoStudioVisual();
+});
+document.getElementById("ocho-prop-filters").addEventListener("click", e => {
+  const btn = e.target.closest(".seg-btn");
+  if (!btn) return;
+  activeOchoPropCat = btn.dataset.opcat;
+  document.querySelectorAll("#ocho-prop-filters .seg-btn").forEach(b => b.classList.toggle("active", b === btn));
+  renderOchoProps();
+});
+renderOchoStudioVisual();
+renderOchoProps();
+
+// 5. Character x Product Combination Simulator
+let simChar = "biwaparu";
+let simProd = "shigadeco";
+function renderSimulator() {
+  document.getElementById("sim-char-list").innerHTML = SIM_CHARS.map(c => `
+    <button type="button" class="pick-btn ${simChar === c.id ? "active" : ""}" data-sc="${c.id}">
+      <span><strong>${c.name}</strong><small>${c.desc}</small></span>
+      <span>${simChar === c.id ? "選択中" : "選択"}</span>
+    </button>
+  `).join("");
+  document.getElementById("sim-prod-list").innerHTML = SIM_PRODS.map(p => `
+    <button type="button" class="pick-btn ${simProd === p.id ? "active" : ""}" data-sp="${p.id}">
+      <span><strong>${p.name}</strong><small>${p.desc}</small></span>
+      <span>${simProd === p.id ? "選択中" : "選択"}</span>
+    </button>
+  `).join("");
+
+  const cObj = SIM_CHARS.find(x => x.id === simChar);
+  const pObj = SIM_PRODS.find(x => x.id === simProd);
+  const res = SIM_MATRIX[`${simChar}+${simProd}`];
+  const pImg = res.prodImg || pObj.img;
+
+  document.getElementById("sim-output").innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <h3 style="font-size:19px; font-weight:900; color:var(--indigo);">${cObj.name} × ${pObj.name}</h3>
+      <span class="badge ${res.badge}">${res.fit}</span>
+    </div>
+    <div class="sim-thumbs">
+      <div class="sim-thumb-box">
+        <img src="${cObj.img}" alt="${cObj.name}">
+        <div class="lbl">${cObj.name} (${cObj.desc})</div>
+      </div>
+      <div class="sim-plus">+</div>
+      <div class="sim-thumb-box">
+        <img src="${pImg}" alt="${pObj.name}">
+        <div class="lbl">${pObj.name}</div>
+      </div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:13px 15px; font-size:14px; font-weight:600; color:var(--indigo);">
+      提案ポイント：${res.pitch}
+    </div>
+    <div class="sim-specs">
+      <div class="sim-spec-cell"><strong>想定ターゲット</strong>${res.target}</div>
+      <div class="sim-spec-cell"><strong>主要印刷工程</strong>${res.process}</div>
+      <div class="sim-spec-cell"><strong>2027 滋賀DC連動</strong>${res.dc}</div>
+      <div class="sim-spec-cell"><strong>関連セクション</strong><a href="#ochokoro-branding">キャラクター</a> · <a href="#r3">プロダクト詳細</a></div>
+    </div>
+  `;
+
+  document.querySelectorAll("#sim-char-list .pick-btn").forEach(b => {
+    b.addEventListener("click", () => { simChar = b.dataset.sc; renderSimulator(); });
+  });
+  document.querySelectorAll("#sim-prod-list .pick-btn").forEach(b => {
+    b.addEventListener("click", () => { simProd = b.dataset.sp; renderSimulator(); });
+  });
+}
+renderSimulator();
+
+// 6. R5 Copy & R6 Questions
+document.getElementById("copy-script-btn").addEventListener("click", () => {
+  const txt = document.getElementById("r5-script-jp").innerText;
+  copyText(txt, "R5 発表原稿");
+});
+
+let r6Filter = "all";
+function renderR6() {
+  const list = R6_DATA.filter(item => r6Filter === "all" || item.cat === r6Filter);
+  const el = document.getElementById("r6-list");
+  el.innerHTML = list.map((item, idx) => `
+    <article class="qa-card">
+      <div class="qa-top">
+        <div>
+          <div class="qa-title">${item.q}</div>
+          <div style="font-size:13px; color:var(--ink-muted); margin-top:2px;"><strong>質問の意図：</strong> ${item.intent}</div>
+        </div>
+        <div style="display:flex; gap:6px; flex-shrink:0;">
+          <button class="btn btn-sm qa-copy-btn" data-jp="${item.jp.replace(/"/g, '&quot;')}" type="button">質問文をコピー</button>
+          <button class="btn btn-sm qa-toggle-btn" type="button">DAY3–4 分岐を見る</button>
+        </div>
+      </div>
+      <div class="qa-jp-box jp">${item.jp}</div>
+      <div class="qa-branch"><strong>回答に応じた DAY3–4 の分岐：</strong> ${item.branch}</div>
+    </article>
+  `).join("");
+
+  el.querySelectorAll(".qa-copy-btn").forEach(b => {
+    b.addEventListener("click", () => copyText(b.dataset.jp, "質問文"));
+  });
+  el.querySelectorAll(".qa-toggle-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      const box = b.closest(".qa-card").querySelector(".qa-branch");
+      const open = box.classList.toggle("open");
+      b.textContent = open ? "分岐を閉じる" : "DAY3–4 分岐を見る";
+    });
+  });
+}
+document.getElementById("r6-filters").addEventListener("click", e => {
+  const btn = e.target.closest(".seg-btn");
+  if (!btn) return;
+  r6Filter = btn.dataset.qcat;
+  document.querySelectorAll("#r6-filters .seg-btn").forEach(b => b.classList.toggle("active", b === btn));
+  renderR6();
+});
+renderR6();
+
+// 7. Team messages & Persistent Checklist
+document.getElementById("copy-team-jp").addEventListener("click", () => copyText(TEAM_MSG_JP, "チーム確認メッセージ"));
+
+function loadChecked() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  } catch { return []; }
+}
+function saveChecked(arr) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch {}
+}
+function renderChecklist() {
+  const saved = loadChecked();
+  const listEl = document.getElementById("check-list");
+  listEl.innerHTML = CHECKLIST_ITEMS.map((text, idx) => {
+    const isChecked = saved.includes(idx);
+    return `
+      <label class="check-item ${isChecked ? "checked" : ""}">
+        <input type="checkbox" data-idx="${idx}" ${isChecked ? "checked" : ""}>
+        <span>${text}</span>
+      </label>
+    `;
+  }).join("");
+
+  const pct = Math.round((saved.length / CHECKLIST_ITEMS.length) * 100);
+  document.getElementById("check-count").textContent = `${saved.length} / ${CHECKLIST_ITEMS.length} 完了 (${pct}%)`;
+  document.getElementById("progress-fill").style.width = `${pct}%`;
+
+  listEl.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const idx = Number(cb.dataset.idx);
+      let next = loadChecked();
+      if (cb.checked) {
+        if (!next.includes(idx)) next.push(idx);
+      } else {
+        next = next.filter(x => x !== idx);
+      }
+      saveChecked(next);
+      renderChecklist();
+    });
+  });
+}
+renderChecklist();
+
+// Modal events
+document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+document.getElementById("lightbox").addEventListener("click", e => {
+  if (e.target.id === "lightbox") closeLightbox();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeLightbox();
+});
+</script>
+</body>
+</html>

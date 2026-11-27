@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>おちょころ ものがたり｜廃棄されるはずだった器と、ひと葉の茶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #F6F1E7;
+    --paper-soft: #FBF8F2;
+    --paper-elevated: #FFFDF8;
+    --sumi: #2A2019;
+    --sumi-soft: #5A4B40;
+    --sumi-muted: #78685C;
+    --terra: #A85D3B;
+    --terra-tint: #F4E8DF;
+    --tea: #4B6B3B;
+    --tea-tint: #E9F0E3;
+    --slate: #2D4561;
+    --slate-tint: #E6ECF2;
+    --hairline: #E2D8C7;
+    --hairline-strong: #CEBFA9;
+    --font-serif: 'Shippori Mincho', 'Noto Serif CJK JP', 'YuMincho', serif;
+    --font-sans: 'Zen Maru Gothic', 'Noto Sans CJK JP', sans-serif;
+    --body-size: 18px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { color-scheme: light; }
+  .nw { white-space: nowrap; }
+  section, article { scroll-margin-top: 68px; }
+
+  body {
+    background: var(--paper);
+    color: var(--sumi);
+    font-family: var(--font-serif);
+    font-size: var(--body-size);
+    line-height: 2.04;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--terra); color: #FFFDF8; }
+  :focus-visible { outline: 2px solid var(--tea); outline-offset: 3px; border-radius: 4px; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: var(--hairline-strong); border-radius: 99px; border: 2px solid var(--paper); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--sumi-muted); }
+
+  a { color: var(--slate); text-underline-offset: 4px; transition: color 0.18s ease; }
+  a:hover { color: var(--terra); }
+
+  /* Sticky Top Bar */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246, 241, 231, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .progress-track {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--terra);
+    transition: width 0.08s linear;
+  }
+  .header-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--sumi);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .brand-back:hover { color: var(--terra); }
+
+  .chapter-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chapter-nav::-webkit-scrollbar { display: none; }
+  .chapter-nav a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sumi-soft);
+    text-decoration: none;
+    padding: 5px 11px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+  .chapter-nav a:hover, .chapter-nav a.is-active {
+    background: var(--terra-tint);
+    color: var(--terra);
+    font-weight: 700;
+  }
+
+  .size-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 999px;
+    padding: 3px;
+    background: var(--paper-soft);
+    flex-shrink: 0;
+  }
+  .size-btn {
+    border: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sumi-soft);
+    padding: 4px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+  .size-btn.active {
+    background: var(--sumi);
+    color: var(--paper-elevated);
+  }
+
+  /* Cover / Hero (Bunkobon Opening) */
+  .hero {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 72px 24px 56px;
+    text-align: center;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero-emblem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: var(--terra);
+  }
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.78rem, 4.6vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    color: var(--sumi);
+    margin-bottom: 16px;
+  }
+  .hero-subtitle {
+    font-family: var(--font-serif);
+    font-size: clamp(0.95rem, 2vw, 1.3rem);
+    color: var(--terra);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 30px;
+  }
+  .mob-br { display: none; }
+  .hero-epigraph {
+    max-width: 560px;
+    margin: 0 auto 38px;
+    padding: 20px 24px;
+    background: var(--paper-soft);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    font-size: 15.5px;
+    line-height: 1.95;
+    color: var(--sumi-soft);
+  }
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    text-align: left;
+  }
+  .toc-item {
+    display: block;
+    text-decoration: none;
+    background: var(--paper-elevated);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 16px 18px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .toc-item:hover {
+    border-color: var(--terra);
+    transform: translateY(-2px);
+  }
+  .toc-num {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--terra);
+    margin-bottom: 4px;
+  }
+  .toc-title {
+    font-family: var(--font-serif);
+    font-size: 13.6px;
+    font-weight: 700;
+    color: var(--sumi);
+    line-height: 1.45;
+  }
+  .toc-place {
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    color: var(--sumi-muted);
+    margin-top: 6px;
+  }
+
+  /* Episode Sections */
+  .episode {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 72px 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .ep-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .ep-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .tag-rain { background: var(--slate-tint); color: var(--slate); }
+  .tag-tea { background: var(--tea-tint); color: var(--tea); }
+  .tag-dusk { background: var(--terra-tint); color: var(--terra); }
+
+  .episode h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.55rem, 3vw, 2.05rem);
+    font-weight: 700;
+    color: var(--sumi);
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  .ep-figure {
+    margin: 0 auto 40px;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--paper-elevated);
+  }
+  .ep-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .ep-caption {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--sumi-muted);
+    padding: 10px 18px;
+    border-top: 1px solid var(--hairline);
+    text-align: right;
+  }
+
+  .prose {
+    max-width: 660px;
+    margin: 0 auto;
+  }
+  .prose p {
+    margin-bottom: 1.45em;
+    text-indent: 1em;
+    text-align: justify;
+    font-feature-settings: "palt";
+  }
+  .prose p.dialogue {
+    text-indent: 0;
+  }
+  .prose p.scene-break {
+    text-indent: 0;
+    text-align: center;
+    color: var(--sumi-muted);
+    letter-spacing: 0.5em;
+    margin: 2em 0;
+  }
+  .prose p.quote-line {
+    text-indent: 0;
+    margin: 1.8em auto;
+    padding: 16px 22px;
+    background: var(--paper-soft);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    font-weight: 600;
+    color: var(--sumi);
+    text-align: center;
+  }
+  ruby rt {
+    font-family: var(--font-sans);
+    font-size: 0.54em;
+    color: var(--sumi-muted);
+    letter-spacing: 0;
+  }
+
+  /* Lore Reveal Section */
+  .lore-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 68px 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--sumi);
+  }
+  .section-lead {
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    color: var(--sumi-soft);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 36px;
+  }
+  .lore-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .lore-card {
+    background: var(--paper-elevated);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 24px 22px;
+  }
+  .lore-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .lore-card h3 {
+    font-family: var(--font-sans);
+    font-size: 16.5px;
+    font-weight: 700;
+    color: var(--sumi);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .lore-card p {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--sumi-soft);
+  }
+
+  /* Modern Continuation Showcase */
+  .modern-section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 68px 24px;
+  }
+  .modern-grid {
+    display: grid;
+    grid-template-columns: 0.92fr 1.28fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .showcase-box {
+    background: var(--paper-elevated);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .showcase-label {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sumi);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .showcase-label span.sub {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--sumi-muted);
+  }
+  .showcase-box img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--hairline);
+  }
+  .showcase-note {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--sumi-soft);
+    margin-top: 12px;
+  }
+
+  /* Colophon Footer */
+  .colophon {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 36px 24px 64px;
+    border-top: 1px solid var(--hairline);
+    text-align: center;
+    font-family: var(--font-sans);
+    color: var(--sumi-muted);
+    font-size: 13.5px;
+    line-height: 1.85;
+  }
+  .colophon-sign {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sumi);
+    margin-bottom: 10px;
+  }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .pill-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--sumi);
+    background: var(--paper-elevated);
+    border: 1px solid var(--hairline-strong);
+    padding: 7px 16px;
+    border-radius: 999px;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+  }
+  .pill-link:hover {
+    border-color: var(--terra);
+    background: var(--terra-tint);
+    color: var(--terra);
+  }
+
+  @media (max-width: 840px) {
+    .toc-list { grid-template-columns: 1fr; }
+    .lore-list { grid-template-columns: 1fr; }
+    .modern-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    :root { --body-size: 16.5px; }
+    .header-inner { padding: 10px 16px; gap: 10px; }
+    .hero { padding: 48px 18px 40px; }
+    .mob-br { display: inline; }
+    .desk-br { display: none; }
+    .episode { padding: 48px 18px; }
+    .chapter-nav a { font-size: 12px; padding: 4px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand-back" href="./index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span>DAY2 ビューアへ戻る</span>
+    </a>
+
+    <nav class="chapter-nav" aria-label="章の移動">
+      <a href="#intro" class="is-active">序</a>
+      <a href="#ep1">第一話</a>
+      <a href="#ep2">第二話</a>
+      <a href="#ep3">第三話</a>
+      <a href="#lore">三つのしるし</a>
+      <a href="#modern">現代編・4コマ</a>
+    </nav>
+
+    <div class="size-controls" role="group" aria-label="文字サイズ切替">
+      <button class="size-btn" type="button" data-size="16px">小</button>
+      <button class="size-btn active" type="button" data-size="18px">中</button>
+      <button class="size-btn" type="button" data-size="20.5px">大</button>
+    </div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+</header>
+
+<main>
+  <!-- Opening / Preface -->
+  <section class="hero" id="intro">
+    <div class="hero-emblem" aria-hidden="true">
+      <svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20c0-2 5.4-3.5 12-3.5s12 1.5 12 3.5l-2.5 13c-.8 3.6-4.7 6-9.5 6s-8.7-2.4-9.5-6L12 20z"/>
+        <ellipse cx="24" cy="20" rx="12" ry="3.5"/>
+        <path d="M29 16.5C30.5 10.5 35.5 7 40 6c-1 6-4.5 10.5-11 10.5z" stroke="#4B6B3B"/>
+      </svg>
+    </div>
+    <h1><span class="nw">おちょころ</span> <span class="nw">ものがたり</span></h1>
+    <p class="hero-subtitle">――捨てられた怨念が、茶の芽にほどけて<br class="mob-br" />優しい精霊になるまで――</p>
+
+    <div class="hero-epigraph">
+      信楽の窯元の裏手から捨てられ、カラスに攫われてびわ湖へ落ちた少し傾いたおちょこ。<br class="desk-br" />
+      「自分を捨てた主人へ祟ろう」と湖底で<ruby>付喪神<rt>つくもがみ</rt></ruby>として目覚めた器は、<br class="desk-br" />
+      病を抱えた朝宮の茶農家に「茶葉の鉢」として拾われたことで、心優しい精霊へ生まれ変わりました。
+    </div>
+
+    <div class="toc-list">
+      <a class="toc-item" href="#ep1">
+        <div class="toc-num">第一話</div>
+        <div class="toc-title">雨の軒下、びわ湖の付喪神</div>
+        <div class="toc-place">信楽の窯元 〜 月夜のびわ湖にて</div>
+      </a>
+      <a class="toc-item" href="#ep2">
+        <div class="toc-num">第二話</div>
+        <div class="toc-title">朝宮の窓辺、ほどけた怨念</div>
+        <div class="toc-place">病床のそば 〜 茶葉の鉢の日々</div>
+      </a>
+      <a class="toc-item" href="#ep3">
+        <div class="toc-num">第三話</div>
+        <div class="toc-title">許しの一葉と、夕暮れの茶</div>
+        <div class="toc-place">かつての窯へ 〜 びわ湖の岸辺にて</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Episode 1 -->
+  <article class="episode" id="ep1">
+    <header class="ep-header">
+      <div class="ep-tag tag-rain">
+        <span>第一話</span>
+        <span>・</span>
+        <span>信楽 〜 月夜のびわ湖</span>
+      </div>
+      <h2>雨の軒下、びわ湖の付喪神</h2>
+    </header>
+
+    <figure class="ep-figure">
+      <img src="./images/story/story_ep01_rain_kiln.jpg" alt="雨の降る信楽の窯元裏手、古い木箱の中で壊れた破片に囲まれた少し傾いた信楽焼のおちょこ" />
+      <figcaption class="ep-caption">わずかに左へ傾いて焼き上がったため、裏手の割れもの箱へ置かれた小さなおちょこ</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>千二百度の<ruby>炎<rt>ほのお</rt></ruby>の中で七日七晩を過ごしたあと、信楽の登り窯がゆっくりと冷えていく音は、どこかすこし冷ややかなため息に似ていた。</p>
+
+      <p>窯から出されたばかりの器たちは、朝の木漏れ日の下でひとつずつ検品される。まっすぐに立ち、指ではじけば澄んだ高い音を返す器たちは、薄紙に包まれて木箱に収められ、京都や東京の料理屋へと華やかに旅立っていく。</p>
+
+      <p>けれど、その小さな酒器――おちょこ――は、どれほどそっと平らな板の上へ置いても、ほんの少しだけ左へ傾いていた。<ruby>高台<rt>こうだい</rt></ruby>の一か所がわずかに低く焼け上がり、職人の掌で小さく首を振られると、そのまま裏手の軒下へと運ばれた。</p>
+
+      <p class="dialogue">「これでは、客の前には出せんな」</p>
+
+      <p>しとしとと冷たい雨が降り始めた夕方。青い霧が下りた古い木箱の中には、口縁が欠けた湯呑みや皿のかけらが冷たく重なり合っている。あしたの朝には砕かれて土へ還される順番を待つ場所だった。すぐ脇に根を張っていた野生の<ruby>山茶<rt>やまちゃ</rt></ruby>の枝から、雨粒に押された小さな茶の若葉がぽとりと落ち、おちょこの縁に緑のしずくとなって浮かんだ。</p>
+
+      <p>――同じ窯、同じ土、同じ炎から生まれたのに。どうして自分だけが捨てられなければならないのだろう。</p>
+
+      <p>雨水が器を満たすにつれ、胸の奥に冷たく黒い澱（おり）のような悔しさが積もっていった。ちょうどそのとき、薄暗い軒先でぴかりと光った信楽の<ruby>灰釉<rt>かいゆう</rt></ruby>と緑の若葉を見つけた一羽の大きなカラスが、ばさっと重い羽音を立てて舞い降りた。</p>
+
+      <p>冷たく硬いくちばしが器の縁をぐっと<ruby>銜<rt>くわ</rt></ruby>え、おちょこは夕闇の空へと引きさらわれた。眼下に遠ざかる窯元の屋根と、赤く点る町のあかり。やがて山を越え、視界いっぱいに暗い鏡――びわ湖――が広がった瞬間、湖上からの強い向かい風にあおられてカラスが低く鳴き、器は夜の水面へ向かって真っ逆さまに落とされた。</p>
+    </div>
+
+    <figure class="ep-figure" style="margin-top: 36px;">
+      <img src="./images/story/story_ep02_crow_biwa.jpg" alt="カラスに運ばれてびわ湖の深い水面へ落ちた傾いた信楽焼の器と、まわりに灯る魂の光" />
+      <figcaption class="ep-caption">月夜のびわ湖へ落ちた水底で、捨てられた悔しさが付喪神（つくもがみ）の魂を呼び覚ました</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>ばしゃん、と冷たい水しぶきが上がる。千二百度の窯で生まれた硬い肌を、秋のびわ湖の深い藍色が音もなく包みこむ。</p>
+
+      <p>暗い湖底に沈みながらも、器の縁に引っかかった一葉の茶の芽と、窯元へ向けた苦い思いだけは消えなかった。信楽の古い土と、びわ湖に千年のあいだ眠る水気（みずけ）、そして「なぜ自分だけを棄てたのか」という深い恨みが、水底の闇で静かに結びつく。</p>
+
+      <p>三日月の光が波紋を照らした深夜。冷えきった器の奥から青白い<ruby>燐光<rt>りんこう</rt></ruby>がゆらめき、ころんと短い手足がほどけ、頭に緑の一葉を乗せた小さな「<ruby>付喪神<rt>つくもがみ</rt></ruby>」が静かに目をひらいたのだった。</p>
+
+      <p class="quote-line">「……自分を捨てたあの主人を、このままにしておくものか。きっと戻って、祟ってやる……」</p>
+
+      <p>胸に鋭い<ruby>怨念<rt>おんねん</rt></ruby>を抱えたまま、小さな影は冷たい水面を蹴り、信楽へと続く東の岸辺へ這い上がっていった。</p>
+    </div>
+  </article>
+
+  <!-- Episode 2 -->
+  <article class="episode" id="ep2">
+    <header class="ep-header">
+      <div class="ep-tag tag-rain">
+        <span>第二話</span>
+        <span>・</span>
+        <span>朝宮の窓辺</span>
+      </div>
+      <h2>朝宮の窓辺、ほどけた怨念</h2>
+    </header>
+
+    <figure class="ep-figure">
+      <img src="./images/story/story_ep02_tea_sprout.jpg" alt="朝の光が差し込む杉の窓辺、朝宮の茶畑を見晴らす窓辺で緑の茶の新芽を育てる信楽焼のおちょこ" />
+      <figcaption class="ep-caption">病を抱えた朝宮の茶農家に「茶葉の鉢」として拾われ、窓辺で柔らかな日差しを浴びた</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>夜が明けるまでに信楽の窯元へ辿り着き、自分を捨てた主人を困らせてやろう――そう決めて山道を急いでいた小さな付喪神は、<ruby>朝宮<rt>あさみや</rt></ruby>の茶畑の畔へさしかかったところで、柔らかな朝日に照らされて身を硬くした。人間の気配が近づいてきたため、急いで器だけのふりをして道端に身を伏せたのだ。</p>
+
+      <p>濡れた落ち葉を踏みしめる足音と、ときおり小さく乾いた<ruby>咳<rt>せき</rt></ruby>の音。立ち止まったのは、長い病を抱えながらも山あいの茶畑を守りつづける、老いた茶農家だった。</p>
+
+      <p class="dialogue">「おや……こんなところに。随分と遠くから流れてきたおちょこだな」</p>
+
+      <p>節くれだった細い手が、泥だらけの赤い器をそっと<ruby>掬<rt>すく</rt></ruby>い上げ、着物の袖で丁寧に泥を拭き取った。付喪神は警戒して身を縮めたが、茶農家は少し傾いた高台を指で愛おしそうになぞり、穏やかに目を細めたのだった。</p>
+
+      <p class="quote-line">「この傾き具合、ちょうど朝日が奥まで差し込みそうだ。お酒より先に、ちいさな茶の芽を育てる『茶葉の鉢』になってくれるかい」</p>
+
+      <p>その日のうちに、おちょこは杉板の窓辺――いちばん温かな朝日が入る場所――へ据えられた。腹の中にふかふかの朝宮の黒土が敷かれ、大切に取り分けられていた幼い茶の芽が植えられた。誰かに祟るためだけに目覚めたはずの自分を、この人は「大切な役目のある鉢」として扱ってくれたのだ。</p>
+
+      <p>茶農家は昼のあいだも窓のすぐそばに布団を敷いて休むことが多かった。熱にうなされる日でも、山の水をひと滴ずつ差すことだけは欠かさず、「きょうもいい緑だ」「無理せず、ゆっくり伸びておくれ」と、まるで家族に語りかけるように笑いかけた。</p>
+
+      <p>春が過ぎ、夏を越え、ふた葉が開くころ。人を傷つけるはずだった冷たい怨念は、朝露と太陽の匂いに洗われて、いつしかすうっと消えていた。夜ごとそっと自分の体の向きを変えて一番光が当たるように芽を傾けていた器は、こうして茶葉の鉢のまま心優しい小さな精霊「おちょころ」として定住（ていじゅう）したのだった。</p>
+    </div>
+  </article>
+
+  <!-- Episode 3 -->
+  <article class="episode" id="ep3">
+    <header class="ep-header">
+      <div class="ep-tag tag-dusk">
+        <span>第三話</span>
+        <span>・</span>
+        <span>かつての窯 〜 びわ湖岸</span>
+      </div>
+      <h2>許しの一葉と、夕暮れの茶</h2>
+    </header>
+
+    <figure class="ep-figure">
+      <img src="./images/story/story_ep03_biwa_tea.jpg" alt="びわ湖の夕暮れを望む木のテーブルで、温かい近江茶を差し出してほほえむおちょころ" />
+      <figcaption class="ep-caption">かつての窯へ許しの一葉を残し、いまはびわ湖のほとりで旅人へ温かい近江茶を届けている</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>金木犀（きんもくせい）の香りが風に混じる穏やかな秋の日。病床のそばで青々と葉を広げたおちょころを撫でながら、老いた茶農家は最後にこう微笑んだ。</p>
+
+      <p class="dialogue">「おまえのおかげで、美しいお茶の季節を最後まで見られたよ。これからは、慌ただしい旅人にもひと息を淹れてあげておくれ」</p>
+
+      <p>主人が静かに眠りについた翌日、おちょころは一度だけ、かつて自分を捨てた信楽の窯元へ向かった。かつて抱いた祟りの気持ちは、もうかけらほども残っていなかった。まだ誰も起きてこない夜明け前の作業台、職人の湯呑みの横に、朝宮の窓辺で育てたいちばん香り高い新茶の一葉をそっと置き、小さくお辞儀をした。</p>
+
+      <p class="quote-line">「捨ててくれて、ありがとう。おかげで、お茶を育てる鉢になれました」</p>
+
+      <p>朝風が山の葉を揺らす音とともに、おちょころは二度と振り返らず、生まれ直したびわ湖のほとりへ歩き出した。</p>
+
+      <p class="scene-break">・　・　・</p>
+
+      <p>季節はめぐり、いまもおちょころは、少し傾いた信楽焼の体と生き抜いた朝宮の茶葉を頭に掲げて、夕暮れのびわ湖岸を歩いている。</p>
+
+      <p>湖岸の小さな喫茶店では、大阪や京都から日帰りで来た旅行者たちが、スマートフォンの時刻表とにらめっこしながら溜め息をついている。「まっすぐ完璧でなければ」と肩に力を入れた人々を見ると、おちょころは黙って、温かな緑の近江茶をすっと差し出すのだ。</p>
+
+      <p>立ちのぼる白い湯気のむこうで、びわ湖の水面が熟した<ruby>杏色<rt>あんずいろ</rt></ruby>からやさしい夜へと溶けていく。かつて誰かに見捨てられ、暗い怨念を抱えていた小さな器は、いまや誰かの張りつめた心をほどく、滋賀の夕暮れの守り手になった。</p>
+
+      <p class="dialogue">「少し傾いていても、途中で立ち止まっても大丈夫。きょうは、もうここでひと息していってね」</p>
+
+      <p>一口飲んだ旅人が画面を伏せて「……今夜は、ここに泊まろうかな」と笑うたび、おちょころの頭の茶葉がひとつ、嬉しそうに揺れるのだった。</p>
+    </div>
+  </article>
+
+  <!-- 3 Hidden Lore Marks -->
+  <section class="lore-section" id="lore">
+    <h2 class="section-title">おちょころに隠された、三つのしるし</h2>
+    <p class="section-lead">怨念の付喪神から、心優しい茶の精霊へ生まれ変わった過去編の記憶。</p>
+
+    <div class="lore-list">
+      <div class="lore-card">
+        <div class="lore-icon" style="background: var(--terra-tint); color: var(--terra);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7c0-1.1 3.1-2 7-2s7 .9 7 2l-1.5 9c-.4 2.2-2.7 3.5-5.5 3.5S6.9 18.2 6.5 16L5 7z"/></svg>
+        </div>
+        <h3>少し傾いた信楽焼の体</h3>
+        <p>かつては「まっすぐ立てない不良品」として捨てられた傾きも、朝宮の窓辺では朝日をたっぷり受け止める大切な取り柄になり、いま一番のチャームポイントです。</p>
+      </div>
+
+      <div class="lore-card">
+        <div class="lore-icon" style="background: var(--tea-tint); color: var(--tea);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
+        <h3>怨念をほどいた「茶葉の鉢」と朝宮の一葉</h3>
+        <p>祟りのために生まれた付喪神が、病床の茶農家に「茶の芽の鉢」として愛されたことで心優しく定住。頭の双葉は、怒りをぬくもりに変えてくれた証です。</p>
+      </div>
+
+      <div class="lore-card">
+        <div class="lore-icon" style="background: var(--slate-tint); color: var(--slate);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <h3>許しの一葉と、びわ湖の湯気</h3>
+        <p>窯元へ感謝の一葉を残して過去を卒業。いまもカラスの声に少しびくっとしつつ、びわ湖岸で温かい近江茶をふるまう優しい精霊として暮らしています。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modern Epilogue Showcase -->
+  <section class="modern-section" id="modern">
+    <h2 class="section-title">現代編・その後のおちょころ</h2>
+    <p class="section-lead">びわ湖の夕方に出会った旅人とのおはなし（Instagram 4コマ ＆ LINEスタンプ試作）。</p>
+
+    <div class="modern-grid">
+      <div class="showcase-box">
+        <div class="showcase-label">
+          <span>番外4コマ「予定をほどいた、びわ湖の夕方」</span>
+          <span class="sub">Instagram 4:5</span>
+        </div>
+        <a href="./ochokoro_insta_comic_JP.png" target="_blank" rel="noopener">
+          <img src="./ochokoro_insta_comic_JP.png" alt="おちょころ Instagram 4コマ漫画：予定をほどいた、びわ湖の夕方" />
+        </a>
+        <p class="showcase-note">第三話で旅人とお茶を分かち合う夕方のひとときを、そのままInstagramエッセイ漫画として描きました。</p>
+      </div>
+
+      <div class="showcase-box">
+        <div class="showcase-label">
+          <span>日常で寄り添う「ひと息スタンプ（全8種試作）」</span>
+          <span class="sub">LINE Creators案</span>
+        </div>
+        <a href="./ochokoro_line_stamp_JP.png" target="_blank" rel="noopener">
+          <img src="./ochokoro_line_stamp_JP.png" alt="おちょころ LINEスタンプ試作案 8種" />
+        </a>
+        <p class="showcase-note">「ひと息しよ」「おつかれころ」「おやすみ」――がんばりすぎる毎日に、そっと肩の力を抜いてくれる小さな合図です。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <div class="colophon-sign">「滋賀で、ひと息。」―― おちょころ</div>
+  <div>作：ヨン ジェユン（Yeon Jeayun）｜立命館大学 経済学研究科 修士課程 2年</div>
+  <div>立命館大学 TRY FIELD × アインズ株式会社 2026｜おちょころ物語アーカイブ</div>
+  <div class="footer-links">
+    <a class="pill-link" href="./index.html">DAY2 総合ビューア</a>
+    <a class="pill-link" href="./おちょころ_発表資料_シンプル版_JP.pdf" target="_blank" rel="noopener">発表資料（シンプル版 PDF）</a>
+    <a class="pill-link" href="./おちょころ_発表資料_JP.pdf" target="_blank" rel="noopener">発表資料（詳細版 PDF）</a>
+    <a class="pill-link" href="./おちょころ_企画レポート_JP.pdf" target="_blank" rel="noopener">企画レポート（14p PDF）</a>
+  </div>
+</footer>
+
+<script>
+  // Reading progress bar & active chapter highlight
+  const progressBar = document.getElementById('progressBar');
+  const navLinks = Array.from(document.querySelectorAll('.chapter-nav a'));
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+  function updateReadingState() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+    progressBar.style.width = pct.toFixed(1) + '%';
+
+    let currentId = sections[0]?.id;
+    for (const sec of sections) {
+      if (sec.getBoundingClientRect().top <= 160) currentId = sec.id;
+    }
+    for (const link of navLinks) {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + currentId);
+    }
+  }
+  window.addEventListener('scroll', updateReadingState, { passive: true });
+  updateReadingState();
+
+  // Font size switcher
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.documentElement.style.setProperty('--body-size', btn.dataset.size);
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('active', b === btn));
+    });
+  });
+</script>
+</body>
+</html>
